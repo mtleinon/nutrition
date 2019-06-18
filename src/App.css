@@ -1,33 +1,121 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
+  margin:0;
+  padding: 0;
+}
+.container {
+   height: 100vh;
+   display: flex;
+   flex-direction: column;
+   overflow-y: hidden;
+   background-color: rgb(235, 235, 235)
+}
+.nutritionList,
+.mealList,
+.planList { 
+  background-color: rgb(245, 245, 245);
+  width: 33vw;
+  overflow-y: auto ;
+  margin: .3rem;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.27);
+}
+.nutritionList,
+.mealList,
+.planList { 
+   background-color: rgb(245, 245, 245);
+  width: 99vw;
+  overflow-y: auto ;
+}
+.mealList {
+  height: 25vh;
+}
+.planList {
+  height: 25vh;
+}
+.nutritionList {
+  height: 50vh;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.listTitleRow {
+  display:flex;
+  font-size: 1.1rem;
+  font-weight: bold;
+  align-content: center;
+  justify-content: space-between;
+  height: 1.5rem;
+  margin: .3rem .6rem 0 .3rem;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.listTitle {
+
+}
+.nutritionName {
+  display: inline-block;
+  width: 6rem;
+}
+.nutritionValue {
+  display: inline-block;
+  width: 3rem;
+  text-align: right;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.nutritionHeading {
+  display: inline-block;
+  border-bottom: 1px solid black;
+  margin-bottom: .2rem;
+}
+.nutritionSummary {
+  display: inline-block;
+}
+.card {
+  background-color: #fff;
+  padding: .5rem .5rem;
+  margin: .5rem .5rem;
+  border-radius: 2px;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.27);
+}
+.editMode {
+  background-color: rgb(255, 253, 162)
+}
+
+
+.cardTitleRow {
+  display:flex;
+  font-size: 1.1rem;
+  font-weight: bold;
+  align-content: center;
+  justify-content: space-between;
+  height: 1.5rem;
+}
+.cardTitle {
+  flex-grow: 1;
+}
+.cardContent {
+  margin-top: .7rem;
+}
+.nutritionRow {
   display: flex;
-  flex-direction: column;
+  align-content: center;
+  align-items: center
+}
+.icons {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.icon {
+  margin-left: .5rem;
+  font-size: 1.1rem;
+}
+.summaryBorder {
+  border-top: 2px solid black;
+  margin-top: .2rem;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* 
+.IconWithTooltip {
+  margin-left: 2rem;
+} */

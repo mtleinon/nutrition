@@ -1,26 +1,50 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import MealsList from './MealsList';
+import PlansList from './PlansList';
+import NutritionsList from './NutritionsList';
+import { NutritionProvider } from './context/nutrition.context';
+import { MealProvider } from './context/meal.context';
+import { PlanProvider } from './context/plan.context';
+import { ShowProvider } from './context/show.context';
+import ReadNutritions from './ReadNutritions';
+import ShowSetNutritionCache from './ShowSetnutritionCache';
+// import Test from './Test';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ShowProvider>
+      <NutritionProvider>
+        <MealProvider>
+          <PlanProvider>
+            <div className="container">
+              {/* <ReadNutritions />
+              <ShowSetNutritionCache /> */}
+              <div className="planList">
+                <PlansList />
+              </div>
+              <div className="mealList">
+                <MealsList />
+              </div>
+              <div className="nutritionList">
+                <NutritionsList />
+              </div>
+            </div>
+          </PlanProvider>
+        </MealProvider>
+      </NutritionProvider>
+    </ShowProvider>
   );
 }
 
 export default App;
+/*
+  Plans       Meals           Nutritions
+  -plan*       -meal*
+    -name       -name
+    -meal1*     -Nutrition*
+    -meal2        -name
+    -meal3        -amount  
+  -summary
+
+
+*/

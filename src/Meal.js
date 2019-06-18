@@ -1,0 +1,199 @@
+import React, { useContext, useState } from 'react';
+import { PlanDispatchContext } from './context/plan.context';
+import { MealDispatchContext } from './context/meal.context';
+import { NutritionContext } from './context/nutrition.context';
+import { PlanContext } from './context/plan.context';
+import NutritionShow from './NutritionShow';
+import NutritionShowHeading from './NutritionHeading';
+import EditableValue from './EditableValue';
+import IconWithTooltip from './IconWithTooltip';
+import { MdAddCircle } from 'react-icons/md';
+import { MdDetails } from 'react-icons/md';
+import { MdModeEdit } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
+import MealSummary from './MealSummary';
+import { ShowContext } from './context/show.context';
+
+export default function Meal({ meal }) {
+  const [showContent, setShowContent] = useState(true);
+
+  const show = useContext(ShowContext);
+  const mealDispatch = useContext(MealDispatchContext);
+  const planDispatch = useContext(PlanDispatchContext);
+  const allNutritions = useContext(NutritionContext);
+  const allPlans = useContext(PlanContext);
+
+  const updateValue = (name, newValue) => {
+    mealDispatch({
+      type: 'UPDATE',
+      id: meal.id,
+      name: name,
+      value: newValue
+    });
+  };
+  const updateNutritionAmountValue = (name, newValue) => {
+    mealDispatch({
+      type: 'UPDATE_NUTRITION',
+      mealId: meal.id,
+      nutritionId: name,
+      amount: newValue
+    });
+  };
+  const removeNutrition = nutritionId => {
+    mealDispatch({
+      type: 'REMOVE_NUTRITION',
+      mealId: meal.id,
+      nutritionId
+    });
+  };
+  const planInEditMode =
+    allPlans.length === 1 ? allPlans[0] : allPlans.find(plan => plan.editMode);
+
+  const mealInPlan = allPlans.find(plan =>
+    plan.meals.find(mealInPlan => mealInPlan.id === meal.id)
+  );
+
+  const mealCanBeAddedToPlan = () => {
+    if (planInEditMode) {
+      if (!planInEditMode.meals.find(mealInPlan => mealInPlan.id === meal.id)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const addMealToPlan = () => {
+    if (mealCanBeAddedToPlan()) {
+      planDispatch({
+        type: 'ADD_MEAL',
+        id: meal.id
+      });
+    }
+  };
+  const deleteMeal = () => {
+    if (!mealInPlan) {
+      mealDispatch({
+        type: 'REMOVE',
+        id: meal.id
+      });
+    }
+  };
+  return (
+    <div className={'card' + (meal.editMode ? ' editMode' : '')}>
+      <div className="cardTitleRow">
+        <div className="cardTitle">
+          <EditableValue
+            initialValue={meal.name}
+            name="name"
+            updateValue={updateValue}
+            width="100%"
+          />{' '}
+        </div>
+
+        <div className="icons">
+          <IconWithTooltip tooltipText="Show nutrients of the meal">
+            <MdDetails
+              className="icon"
+              onClick={() => setShowContent(!showContent)}
+            />
+          </IconWithTooltip>
+          <IconWithTooltip
+            tooltipText={
+              mealCanBeAddedToPlan()
+                ? 'Add meal to plan'
+                : planInEditMode
+                ? 'Meal is already in plan'
+                : 'Add meal to plan by setting a plan to edit mode first.'
+            }
+          >
+            <MdAddCircle
+              className="icon"
+              style={{
+                color: mealCanBeAddedToPlan() ? 'green' : 'grey'
+              }}
+              onClick={addMealToPlan}
+            />
+          </IconWithTooltip>
+          <IconWithTooltip
+            tooltipText={
+              !meal.editMode
+                ? 'Set edit mode. Add nutrients to meal.'
+                : 'Close edit mode.'
+            }
+          >
+            <MdModeEdit
+              className="icon"
+              onClick={() =>
+                mealDispatch({
+                  type: 'TOGGLE_EDIT_MODE',
+                  id: meal.id
+                })
+              }
+            />
+          </IconWithTooltip>
+          <IconWithTooltip
+            tooltipText={
+              mealInPlan
+                ? 'Meal can\'t be deleted. It is in "' +
+                  mealInPlan.name +
+                  '" plan.'
+                : 'Delete meal.'
+            }
+          >
+            <MdDelete
+              className="icon"
+              style={{ color: mealInPlan ? 'gray' : 'red' }}
+              onClick={deleteMeal}
+            />
+          </IconWithTooltip>
+        </div>
+      </div>
+      {showContent && meal.nutritions.length > 0 && (
+        <div className="cardContent">
+          <ul>
+            <li>
+              <NutritionShowHeading printAmount={true} />
+            </li>
+            {meal.nutritions.map(nutrition => (
+              <li key={nutrition.id}>
+                <div className="nutritionRow">
+                  <NutritionShow
+                    nutrition={
+                      show.nutritionIds
+                        ? // ? allNutritions[show.nutritionIds[nutrition.id]] //TODO: optimize
+                          allNutritions.find(n => n.id === nutrition.id)
+                        : allNutritions.find(n => n.id === nutrition.id)
+                    } //TODO: optimize
+                  />
+                  <EditableValue
+                    initialValue={nutrition.amount}
+                    name={nutrition.id}
+                    updateValue={updateNutritionAmountValue}
+                    width="3rem"
+                    type="number"
+                  />
+                  <div className="icons">
+                    <IconWithTooltip
+                      className="IconWithTooltip"
+                      tooltipText="Remove nutrition"
+                      position="right center"
+                    >
+                      <MdDelete
+                        className="icon"
+                        style={{ color: 'red' }}
+                        onClick={() => removeNutrition(nutrition.id)}
+                      />
+                    </IconWithTooltip>
+                  </div>
+                </div>
+              </li>
+            ))}
+            <li>
+              <MealSummary meal={meal} showBorderTop={true} />
+            </li>
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
