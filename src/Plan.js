@@ -71,7 +71,9 @@ export default function Plan({ plan }) {
         <div className="cardContent">
           <ul>
             <li>
-              <NutritionHeading />
+              <div style={{ marginRight: '1.6rem' }}>
+                <NutritionHeading />
+              </div>
             </li>
             {plan.meals.map(meal => (
               <li key={meal.id}>
@@ -102,7 +104,9 @@ export default function Plan({ plan }) {
               </li>
             ))}
             <li>
-              <PlanSummary plan={plan} showBorderTop={true} />
+              <div style={{ marginRight: '1.6rem' }}>
+                <PlanSummary plan={plan} showBorderTop={true} />
+              </div>
             </li>
           </ul>
         </div>

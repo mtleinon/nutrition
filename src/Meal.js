@@ -4,7 +4,7 @@ import { MealDispatchContext } from './context/meal.context';
 import { NutritionContext } from './context/nutrition.context';
 import { PlanContext } from './context/plan.context';
 import NutritionShow from './NutritionShow';
-import NutritionShowHeading from './NutritionHeading';
+import NutritionHeading from './NutritionHeading';
 import EditableValue from './EditableValue';
 import IconWithTooltip from './IconWithTooltip';
 import { MdAddCircle } from 'react-icons/md';
@@ -152,11 +152,13 @@ export default function Meal({ meal }) {
         <div className="cardContent">
           <ul>
             <li>
-              <NutritionShowHeading printAmount={true} />
+              <div style={{ marginRight: '1.6rem' }}>
+                <NutritionHeading printAmount={true} />
+              </div>
             </li>
             {meal.nutritions.map(nutrition => (
               <li key={nutrition.id}>
-                <div className="nutritionRow">
+                <div className="nutritionRow ">
                   <NutritionShow
                     nutrition={
                       show.nutritionIds
@@ -166,6 +168,7 @@ export default function Meal({ meal }) {
                     } //TODO: optimize
                   />
                   <EditableValue
+                    // className="nutritionValue"
                     initialValue={nutrition.amount}
                     name={nutrition.id}
                     updateValue={updateNutritionAmountValue}
@@ -189,7 +192,12 @@ export default function Meal({ meal }) {
               </li>
             ))}
             <li>
-              <MealSummary meal={meal} showBorderTop={true} />
+              <div
+                className="nutritionRow summaryBorder"
+                style={{ marginRight: '4.6rem' }}
+              >
+                <MealSummary meal={meal} showBorderTop={true} />
+              </div>
             </li>
           </ul>
         </div>

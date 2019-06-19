@@ -27,10 +27,10 @@
   overflow-y: auto ;
 }
 .mealList {
-  height: 25vh;
+  height: 40vh;
 }
 .planList {
-  height: 25vh;
+  height: 50vh;
 }
 .nutritionList {
   height: 50vh;
@@ -53,24 +53,42 @@ ul {
 .listTitle {
 
 }
-.nutritionName {
-  display: inline-block;
-  width: 6rem;
+
+/* .nutritionValues {
+  flex: 1 1 auto;
+  display: flex;
+  min-width: 0;
+
+} */
+.nutritionRow {
+  display: flex;
+  min-width: 0;
 }
+.nutritionName {
+  flex: 1 1 auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
 .nutritionValue {
-  display: inline-block;
-  width: 3rem;
+  flex: 0 0 3rem;
   text-align: right;
 }
 
 .nutritionHeading {
-  display: inline-block;
+  display: flex;
+  min-width: 0;
   border-bottom: 1px solid black;
   margin-bottom: .2rem;
 }
 .nutritionSummary {
-  display: inline-block;
+  display: flex;
+  min-width: 0;
 }
+
+
 .card {
   background-color: #fff;
   padding: .5rem .5rem;
@@ -81,7 +99,6 @@ ul {
 .editMode {
   background-color: rgb(255, 253, 162)
 }
-
 
 .cardTitleRow {
   display:flex;
@@ -96,11 +113,6 @@ ul {
 }
 .cardContent {
   margin-top: .7rem;
-}
-.nutritionRow {
-  display: flex;
-  align-content: center;
-  align-items: center
 }
 .icons {
   display: inline-flex;

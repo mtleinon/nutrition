@@ -15,7 +15,10 @@ export default function PlansList() {
   const plans = useContext(PlanContext);
   const show = useContext(ShowContext);
   return (
-    <div>
+    <div
+      className="planList"
+      style={{ height: show.showPlans ? '50vh' : '2rem' }}
+    >
       <div className="listTitleRow">
         <div className="listTitle">Plans</div>
         <div className="icons">
@@ -31,7 +34,7 @@ export default function PlansList() {
               }
             />
           </IconWithTooltip>
-          <IconWithTooltip tooltipText="Show plans">
+          <IconWithTooltip tooltipText="ShAdd new plan">
             <MdAddCircle
               className="icon"
               style={{ color: 'green' }}

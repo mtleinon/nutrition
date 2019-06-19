@@ -15,11 +15,14 @@ export default function MealsList() {
   const showDispatch = useContext(ShowDispatchContext);
   const show = useContext(ShowContext);
   return (
-    <div>
+    <div
+      className="mealList"
+      style={{ height: show.showMeals ? '40 vh' : '2rem' }}
+    >
       <div className="listTitleRow">
         <div className="listTitle">Meals</div>
         <div className="icons">
-          <IconWithTooltip tooltipText="Show plans">
+          <IconWithTooltip tooltipText="Show meals">
             <MdDetails
               className="icon"
               style={{ color: 'green' }}

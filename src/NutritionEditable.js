@@ -14,42 +14,44 @@ export default function NutritionEditable({ nutrition }) {
   };
 
   return (
-    <div style={{ display: 'inline-block' }}>
+    <>
       <EditableValue
+        className="nutritionName"
         initialValue={nutrition.name}
         name="name"
         updateValue={updateValue}
-        width="10rem"
         tooltip={nutrition.name}
+        width="100%"
       />
       <EditableValue
+        // width="3rem"
+        width="100%"
         initialValue={nutrition.energy}
         name="energy"
         updateValue={updateValue}
-        width="3rem"
         type="number"
       />
       <EditableValue
+        width="100%"
         initialValue={nutrition.protein}
         name="protein"
         updateValue={updateValue}
-        width="3rem"
         type="number"
       />
       <EditableValue
+        width="100%"
         initialValue={nutrition.fet}
         name="fet"
         updateValue={updateValue}
-        width="3rem"
         type="number"
       />
       <EditableValue
+        width="100%"
         initialValue={nutrition.carbohydrates}
         name="carbohydrates"
         updateValue={updateValue}
-        width="3rem"
         type="number"
       />
-    </div>
+    </>
   );
 }

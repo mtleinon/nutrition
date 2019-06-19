@@ -69,46 +69,56 @@ export default function NutritionsList() {
   };
 
   return (
-    <div>
+    <div style={{ height: show.showMeals ? '100%' : '2rem' }}>
       <div className="listTitleRow">
         <div className="listTitle">Nutritions</div>
-        search:
-        <input
-          style={{ width: '6rem' }}
-          onChange={changeSearchString}
-          value={filterState.searchString}
-        />
-        page:
-        <input
-          style={{ width: '2rem' }}
-          onChange={e => setPage(e.target.value)}
-          value={page}
-        />
-        /{Math.ceil(filterState.filteredNutritions.length / pageSize)}
-        {'  '}
-        pageSize:
-        <input
-          style={{ width: '2rem' }}
-          onChange={e => setPageSize(e.target.value)}
-          value={pageSize}
-        />
-        <button
-          disabled={page <= 1}
-          style={{ width: '2rem' }}
-          onClick={e => setPage(page - 1)}
-        >
-          -
-        </button>
-        <button
-          disabled={
-            page >= Math.ceil(filterState.filteredNutritions.length / pageSize)
-          }
-          style={{ width: '2rem' }}
-          onClick={e => setPage(page + 1)}
-        >
-          +
-        </button>
-        count: {filterState.filteredNutritions.length}
+        <div className="searchInput">
+          search:
+          <input
+            style={{ width: '6rem' }}
+            onChange={changeSearchString}
+            value={filterState.searchString}
+          />
+          count: {filterState.filteredNutritions.length}
+        </div>
+        <div className="pageSelection">
+          <div className="pageButtons" style={{ display: 'inline-block' }}>
+            <button
+              disabled={page <= 1}
+              style={{ width: '2rem' }}
+              onClick={e => setPage(page - 1)}
+            >
+              -
+            </button>
+            <button
+              disabled={
+                page >=
+                Math.ceil(filterState.filteredNutritions.length / pageSize)
+              }
+              style={{ width: '2rem' }}
+              onClick={e => setPage(page + 1)}
+            >
+              +
+            </button>
+          </div>
+          <div className="pageNumber" style={{ display: 'inline-block' }}>
+            page:
+            <input
+              style={{ width: '2rem' }}
+              onChange={e => setPage(e.target.value)}
+              value={page}
+            />
+            /{Math.ceil(filterState.filteredNutritions.length / pageSize)}
+          </div>
+        </div>
+        <div className="pageSize">
+          page size:
+          <input
+            style={{ width: '2rem' }}
+            onChange={e => setPageSize(e.target.value)}
+            value={pageSize}
+          />
+        </div>
         <div className="icons">
           <IconWithTooltip tooltipText="Show plans">
             <MdDetails
@@ -148,7 +158,9 @@ export default function NutritionsList() {
           <div className="cardContent">
             <ul>
               <li>
-                <NutritionHeading />
+                <div style={{ marginRight: '3.2rem' }}>
+                  <NutritionHeading />
+                </div>
               </li>
 
               {filterState.filteredNutritions

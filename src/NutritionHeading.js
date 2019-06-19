@@ -9,6 +9,7 @@ export default function NutritionHeading({ printAmount }) {
       <span className="nutritionValue">Fet</span>
       <span className="nutritionValue">Carb</span>
       {printAmount && <span className="nutritionValue">Amo</span>}
+      {/* Extra marginRight for delete icon which is not in heading row */}
     </div>
   );
 }

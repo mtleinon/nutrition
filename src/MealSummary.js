@@ -26,17 +26,15 @@ export default function MealSummary({ name, meal, showBorderTop }) {
       protein: 0
     }
   );
-  // console.log(summary);
 
   return (
-    <div
-      className={'nutritionSummary' + (showBorderTop ? ' summaryBorder' : '')}
-    >
-      <span className="nutritionName">{name}</span>
-      <span className="nutritionValue">{summary.energy.toFixed(1)}</span>
-      <span className="nutritionValue">{summary.protein.toFixed(1)}</span>
-      <span className="nutritionValue">{summary.fet.toFixed(1)}</span>
-      <span className="nutritionValue">{summary.carbohydrates.toFixed(1)}</span>
-    </div>
+    <>
+      <div className="nutritionName">{name}</div>
+      <div className="nutritionValue">{summary.energy.toFixed(1)}</div>
+      <div className="nutritionValue">{summary.protein.toFixed(1)}</div>
+      <div className="nutritionValue">{summary.fet.toFixed(1)}</div>
+      <div className="nutritionValue">{summary.carbohydrates.toFixed(1)}</div>
+      {/* extra marginRight for amount and delete icon which are not in this summary row */}
+    </>
   );
 }

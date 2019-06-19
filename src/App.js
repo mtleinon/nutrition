@@ -9,6 +9,7 @@ import { PlanProvider } from './context/plan.context';
 import { ShowProvider } from './context/show.context';
 import ReadNutritions from './ReadNutritions';
 import ShowSetNutritionCache from './ShowSetnutritionCache';
+
 // import Test from './Test';
 function App() {
   return (
@@ -19,15 +20,9 @@ function App() {
             <div className="container">
               {/* <ReadNutritions />
               <ShowSetNutritionCache /> */}
-              <div className="planList">
-                <PlansList />
-              </div>
-              <div className="mealList">
-                <MealsList />
-              </div>
-              <div className="nutritionList">
-                <NutritionsList />
-              </div>
+              <PlansList />
+              <MealsList />
+              <NutritionsList />
             </div>
           </PlanProvider>
         </MealProvider>

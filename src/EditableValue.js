@@ -6,12 +6,14 @@ export default function EditableValue({
   updateValue,
   width,
   type,
-  tooltip
+  tooltip,
+  className
 }) {
   const [value, setValue] = useState(initialValue);
   const [editMode, setEditMode] = useState(false);
   width = width === undefined ? '5rem' : width;
   type = type === undefined ? 'text' : type;
+  className = className === undefined ? 'nutritionValue' : className;
 
   const keyPress = e => {
     console.log(e.keyCode);
@@ -39,25 +41,28 @@ export default function EditableValue({
   };
 
   const showValue = () => (
-    <span
+    <div
+      className={className}
       tabIndex="0"
       style={{
+        // display: 'block',
         fontFamily: 'inherit',
         fontSize: 'inherit',
-        display: 'inline-block',
+        // display: 'inline-block',
         textAlign: type === 'number' ? 'right' : 'left',
-        width,
+        // width,
         overflow: 'hidden',
         whiteSpace: 'nowrap'
       }}
       onClick={() => setEditMode(true)}
     >
       {type === 'number' ? (+value).toFixed(1) : value}
-    </span>
+    </div>
   );
 
   return editMode ? (
     <input
+      className={className}
       autoFocus
       tabIndex="0"
       type={type}
