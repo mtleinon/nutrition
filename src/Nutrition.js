@@ -91,11 +91,8 @@ const Nutrition = ({
   );
 };
 export default React.memo(Nutrition, (c, p) => {
-  // console.log(c, p);
   return (
-    c.mealInEditMode === p.mealInEditMode &&
+    c.canNutritionBeAddedToMeal === p.canNutritionBeAddedToMeal &&
     c.nutritionInMeal === p.nutritionInMeal
   );
-
-  // return false;
 });
