@@ -69,23 +69,26 @@ export default function NutritionsList() {
   };
 
   return (
-    <div style={{ height: show.showMeals ? '100%' : '2rem' }}>
+    <div
+      className={'nutritionList' + (show.showNutritions ? '' : ' closedList')}
+    >
       <div className="listTitleRow">
         <div className="listTitle">Nutritions</div>
         <div className="searchInput">
-          search:
+          {/* search: */}
           <input
+            placeholder="Search"
             style={{ width: '6rem' }}
             onChange={changeSearchString}
             value={filterState.searchString}
           />
-          count: {filterState.filteredNutritions.length}
+          {/* ({filterState.filteredNutritions.length}) */}
         </div>
         <div className="pageSelection">
-          <div className="pageButtons" style={{ display: 'inline-block' }}>
+          <div className="pageButtons">
             <button
               disabled={page <= 1}
-              style={{ width: '2rem' }}
+              style={{ width: '1rem' }}
               onClick={e => setPage(page - 1)}
             >
               -
@@ -95,16 +98,15 @@ export default function NutritionsList() {
                 page >=
                 Math.ceil(filterState.filteredNutritions.length / pageSize)
               }
-              style={{ width: '2rem' }}
+              style={{ width: '1rem' }}
               onClick={e => setPage(page + 1)}
             >
               +
             </button>
           </div>
           <div className="pageNumber" style={{ display: 'inline-block' }}>
-            page:
             <input
-              style={{ width: '2rem' }}
+              style={{ width: '2rem', textAlign: 'right' }}
               onChange={e => setPage(e.target.value)}
               value={page}
             />
@@ -112,8 +114,9 @@ export default function NutritionsList() {
           </div>
         </div>
         <div className="pageSize">
-          page size:
+          {/* PS: */}
           <input
+            placeholder="PS"
             style={{ width: '2rem' }}
             onChange={e => setPageSize(e.target.value)}
             value={pageSize}
@@ -154,31 +157,33 @@ export default function NutritionsList() {
         </div>
       </div>
       {show.showNutritions && (
-        <div className="card">
-          <div className="cardContent">
-            <ul>
-              <li>
-                <div style={{ marginRight: '3.2rem' }}>
-                  <NutritionHeading />
-                </div>
-              </li>
+        <div className="listContainer">
+          <div className="card">
+            <div className="cardContent">
+              <ul>
+                <li>
+                  <div style={{ marginRight: '3.2rem' }}>
+                    <NutritionHeading />
+                  </div>
+                </li>
 
-              {filterState.filteredNutritions
-                .filter((_, i, array) => {
-                  return i >= (page - 1) * pageSize && i < page * pageSize;
-                })
-                .map(nutrition => (
-                  <Nutrition
-                    key={nutrition.id}
-                    nutrition={nutrition}
-                    mealInEditMode={mealInEditMode !== undefined}
-                    canNutritionBeAddedToMeal={canNutritionBeAddedToMeal(
-                      nutrition.id
-                    )}
-                    nutritionInMeal={nutritionInMeal(nutrition.id)}
-                  />
-                ))}
-            </ul>
+                {filterState.filteredNutritions
+                  .filter((_, i, array) => {
+                    return i >= (page - 1) * pageSize && i < page * pageSize;
+                  })
+                  .map(nutrition => (
+                    <Nutrition
+                      key={nutrition.id}
+                      nutrition={nutrition}
+                      mealInEditMode={mealInEditMode !== undefined}
+                      canNutritionBeAddedToMeal={canNutritionBeAddedToMeal(
+                        nutrition.id
+                      )}
+                      nutritionInMeal={nutritionInMeal(nutrition.id)}
+                    />
+                  ))}
+              </ul>
+            </div>
           </div>
         </div>
       )}

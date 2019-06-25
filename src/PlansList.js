@@ -16,8 +16,8 @@ export default function PlansList() {
   const show = useContext(ShowContext);
   return (
     <div
-      className="planList"
-      style={{ height: show.showPlans ? '50vh' : '2rem' }}
+      className={'planList' + (show.showPlans ? '' : ' closedList')}
+      // style={{ height: show.showPlans ? '100%' : '1.8rem' }}
     >
       <div className="listTitleRow">
         <div className="listTitle">Plans</div>
@@ -54,11 +54,13 @@ export default function PlansList() {
         </div>
       </div>
       {show.showPlans && (
-        <ul>
-          {plans.map(plan => (
-            <Plan key={plan.id} plan={plan} />
-          ))}
-        </ul>
+        <div className="listContainer">
+          <ul>
+            {plans.map(plan => (
+              <Plan key={plan.id} plan={plan} />
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );
