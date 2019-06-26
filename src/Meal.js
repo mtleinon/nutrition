@@ -13,14 +13,18 @@ import { MdModeEdit } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
 import MealSummary from './MealSummary';
 import { ShowContext } from './context/show.context';
+import NutritionSummary from './NutritionSummary';
 
 export default function Meal({ meal }) {
-  const [showContent, setShowContent] = useState(true);
+  const [showContent, setShowContent] = useState({
+    summary: true,
+    detailedSummary: false
+  });
 
   const show = useContext(ShowContext);
   const mealDispatch = useContext(MealDispatchContext);
   const planDispatch = useContext(PlanDispatchContext);
-  const allNutritions = useContext(NutritionContext);
+  const allNutritions = useContext(NutritionContext).nutritions;
   const allPlans = useContext(PlanContext);
 
   const updateValue = (name, newValue) => {
@@ -94,7 +98,20 @@ export default function Meal({ meal }) {
           <IconWithTooltip tooltipText="Show nutrients of the meal">
             <MdDetails
               className="icon"
-              onClick={() => setShowContent(!showContent)}
+              onClick={() =>
+                setShowContent(state => ({ ...state, summary: !state.summary }))
+              }
+            />
+          </IconWithTooltip>
+          <IconWithTooltip tooltipText="Show details nutrients of the meal">
+            <MdDetails
+              className="icon"
+              onClick={() =>
+                setShowContent(state => ({
+                  ...state,
+                  detailedSummary: !state.detailedSummary
+                }))
+              }
             />
           </IconWithTooltip>
           <IconWithTooltip
@@ -148,7 +165,7 @@ export default function Meal({ meal }) {
           </IconWithTooltip>
         </div>
       </div>
-      {showContent && meal.nutritions.length > 0 && (
+      {showContent.summary && meal.nutritions.length > 0 && (
         <div className="cardContent">
           <ul>
             <li>
@@ -198,6 +215,9 @@ export default function Meal({ meal }) {
               >
                 <MealSummary meal={meal} showBorderTop={true} />
               </div>
+              {showContent.detailedSummary && (
+                <NutritionSummary meal={meal} showBorderTop={true} />
+              )}
             </li>
           </ul>
         </div>

@@ -3,7 +3,7 @@ import { NutritionContext } from './context/nutrition.context';
 import { ShowDispatchContext } from './context/show.context';
 
 export default function ShowSetNutritionCache() {
-  const nutritions = useContext(NutritionContext);
+  const nutritions = useContext(NutritionContext).nutritions;
   const showDispatch = useContext(ShowDispatchContext);
   for (const [nutritionIndex, nutrition] of nutritions.entries()) {
     showDispatch({

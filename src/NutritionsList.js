@@ -13,7 +13,7 @@ import { MdDetails } from 'react-icons/md';
 import { MealContext } from './context/meal.context';
 
 export default function NutritionsList() {
-  const nutritions = useContext(NutritionContext);
+  const nutritions = useContext(NutritionContext).nutritions;
   const nutritionDispatch = useContext(NutritionDispatchContext);
   const showDispatch = useContext(ShowDispatchContext);
   const show = useContext(ShowContext);

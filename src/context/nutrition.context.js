@@ -36,7 +36,10 @@ export function NutritionProvider({ children }) {
   const [nutritions, dispatch] = useLocalStorageReducer(
     'nutritions',
     nutritionReducer,
-    defaultNutritions
+    {
+      nutritions: defaultNutritions,
+      nutritionInfo: {}
+    }
   );
   return (
     <NutritionContext.Provider value={nutritions}>

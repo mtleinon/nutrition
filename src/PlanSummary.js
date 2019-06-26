@@ -5,7 +5,7 @@ import { ShowContext } from './context/show.context';
 
 export default function PlanSummary({ plan, showBorderTop }) {
   const show = useContext(ShowContext);
-  const allNutritions = useContext(NutritionContext);
+  const allNutritions = useContext(NutritionContext).nutritions;
   const allMeals = useContext(MealContext);
 
   const mealSummary = meal => {

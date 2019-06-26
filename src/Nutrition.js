@@ -15,12 +15,6 @@ const Nutrition = ({
 }) => {
   const nutritionDispatch = useContext(NutritionDispatchContext);
   const mealDispatch = useContext(MealDispatchContext);
-  // const meals = useContext(MealContext);
-
-  // const mealInEditMode = true;
-  //   meals.length === 1 ? meals[0] : meals.find(meal => meal.editMode);
-
-  // const canNutritionBeAddedToMeal = () => true;
   const addNutritionToMeal = () => {
     if (canNutritionBeAddedToMeal) {
       mealDispatch({
@@ -32,11 +26,6 @@ const Nutrition = ({
       });
     }
   };
-  // const nutritionInMeal = false;
-  // meals.find(meal =>
-  //   meal.nutritions.find(nutritionInMeal => nutritionInMeal.id === nutrition.id)
-  // );
-  // console.log('Nutrition', nutrition.name);
 
   return (
     <li key={nutrition.id}>

@@ -4,13 +4,15 @@ import { ShowContext } from './context/show.context';
 
 export default function MealSummary({ name, meal, showBorderTop }) {
   const show = useContext(ShowContext);
-  const allNutritions = useContext(NutritionContext);
+  const allNutritions = useContext(NutritionContext).nutritions;
 
   const mealNutritions = meal.nutritions.map(nutrition => ({
     ...nutrition,
     ...allNutritions[show.nutritionIds[nutrition.id]] //TODO: optimize
     // ...allNutritions.find(n => n.id === nutrition.id) //TODO: optimize
   }));
+
+  // Initial value given to reduce contains object properties which summs are calculated.
   const summary = mealNutritions.reduce(
     (summ, cur) => {
       const res = {};
@@ -26,7 +28,6 @@ export default function MealSummary({ name, meal, showBorderTop }) {
       protein: 0
     }
   );
-
   return (
     <>
       <div className="nutritionName">{name}</div>
