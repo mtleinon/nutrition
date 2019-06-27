@@ -8,6 +8,7 @@ import { MdAddCircle } from 'react-icons/md';
 import { MdDetails } from 'react-icons/md';
 import { ShowContext } from './context/show.context';
 import { ShowDispatchContext } from './context/show.context';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 export default function MealsList() {
   const meals = useContext(MealContext);
@@ -15,7 +16,11 @@ export default function MealsList() {
   const showDispatch = useContext(ShowDispatchContext);
   const show = useContext(ShowContext);
   return (
-    <div className={'mealList' + (show.showMeals ? '' : ' closedList')}>
+    <div
+      className={
+        'mealListColor mealList' + (show.showMeals ? '' : ' closedList')
+      }
+    >
       <div className="listTitleRow">
         <div className="listTitle">Meals</div>
         <div className="icons">
@@ -51,7 +56,7 @@ export default function MealsList() {
         </div>
       </div>
       {show.showMeals && (
-        <div className="listContainer">
+        <div className="mealListContainerColor listContainer">
           <ul>
             {meals.map(meal => (
               <Meal key={meal.id} meal={meal} />

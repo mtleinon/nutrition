@@ -11,6 +11,7 @@ import { ShowDispatchContext } from './context/show.context';
 import { MdDetails } from 'react-icons/md';
 
 import { MealContext } from './context/meal.context';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 export default function NutritionsList() {
   const nutritions = useContext(NutritionContext).nutritions;
@@ -70,20 +71,21 @@ export default function NutritionsList() {
 
   return (
     <div
-      className={'nutritionList' + (show.showNutritions ? '' : ' closedList')}
+      className={
+        'nutritionListColor nutritionList' +
+        (show.showNutritions ? '' : ' closedList')
+      }
     >
       <div className="listTitleRow">
         <div className="listTitle">Nutritions</div>
-        <div className="searchInput">
-          {/* search: */}
-          <input
-            placeholder="Search"
-            style={{ width: '6rem' }}
-            onChange={changeSearchString}
-            value={filterState.searchString}
-          />
-          {/* ({filterState.filteredNutritions.length}) */}
-        </div>
+        <input
+          placeholder="Search"
+          style={{ width: '6rem' }}
+          onChange={changeSearchString}
+          value={filterState.searchString}
+        />
+        {/* ({filterState.filteredNutritions.length}) */}
+        {/* </div> */}
         <div className="pageSelection">
           <div className="pageButtons">
             <button
@@ -104,7 +106,7 @@ export default function NutritionsList() {
               +
             </button>
           </div>
-          <div className="pageNumber" style={{ display: 'inline-block' }}>
+          <div className="pageNumber">
             <input
               style={{ width: '2rem', textAlign: 'right' }}
               onChange={e => setPage(e.target.value)}
@@ -157,7 +159,7 @@ export default function NutritionsList() {
         </div>
       </div>
       {show.showNutritions && (
-        <div className="listContainer">
+        <div className="nutritionListContainerColor listContainer">
           <div className="card">
             <div className="cardContent">
               <ul>

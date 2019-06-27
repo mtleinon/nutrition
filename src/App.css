@@ -7,10 +7,11 @@ body, html {
   padding: 0;
 }
 
+
 /* Mobile layout by default. Only one column. */
 .container {
   display: grid;
-  grid-gap: 1px;
+  /* grid-gap: 1px; */
   grid-template-columns: 1fr;
   grid-template-rows: auto auto auto;
   height: 100vh;
@@ -28,6 +29,7 @@ body, html {
   overflow-y: hidden ;
   overflow-x: hidden ;
 }
+
 
 @media only screen and (min-width: 800px) {
   .container {
@@ -68,13 +70,45 @@ body, html {
   position: relative;
   z-index: 10;
   display: flex;
+  font-size: 1rem;
+  font-weight: normal;
+  align-items: center;
+  justify-content: space-between;
+  height: 1.8rem;
+  margin: 0rem 1rem 0rem .6rem;
+
+  box-shadow: 0px 2px 0px 0px rgba(0,0,0,.2);
+}
+.listTitle {
   font-size: 1.1rem;
   font-weight: bold;
-  align-content: center;
-  justify-content: space-between;
-  height: 1.5rem;
-  margin: .3rem 1.4rem 0rem .6rem;
-  box-shadow: 0px 2px 0px 0px rgba(0,0,0,.2);
+}
+.listTitleRow input {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+  background-color: rgba(1,1,1,.1);
+  border: none;
+}
+.pageSelection {
+  display: inline-flex;
+  align-items: center;
+  font-size: inherit;
+}
+.pageButtons {
+  display: inline-flex;
+  align-items: center;
+}
+.pageNumber {
+  display: inline-flex;
+  align-items: center;
+}
+.pageSize {
+  display: inline-flex;
+  align-items: center;
+}
+.searchInput {
+  align-self: center;
 }
 
 ul {
@@ -134,7 +168,7 @@ ul {
   height: 1.5rem;
 }
 
-.cardTitle {
+.cardTitle {  
   flex-grow: 1;
 }
 
@@ -157,10 +191,64 @@ ul {
   margin-top: .2rem;
 }
 
-.pageButtons {
-  display: inline-flex;
-  align-items: center;
+.mealListColor {
+  background-color: rgb(21, 204, 119);
+}
+.mealListContainerColor {
+  background-color: rgb(0,167,68);
 
+  /* Scroll bar styling for FireFox */
+  scrollbar-color:  rgba(0,0,0,.5) rgba(21, 204, 119, 0.85);;
+  scrollbar-width: thin;
 }
 
+.nutritionListColor {
+  background-color: rgb(117, 211, 255);
+}
+.nutritionListContainerColor {
+  background-color: rgb(51, 143, 185);
+  /* Scroll bar styling for FireFox */
+  scrollbar-color:  rgba(0,0,0,.5) rgba(117, 211, 255, 0.85);;
+  scrollbar-width: thin;
+}
+.planListColor {
+  background-color: #F1D2A4;
+}
+.planListContainerColor {
+  background-color: rgba(241, 210, 164, 0.795);
+  background-color: rgb(190, 167, 132);
 
+  /* Scroll bar styling for FireFox */
+  scrollbar-color:  rgba(0,0,0,.5) rgba(241, 210, 164, 0.85);;
+  scrollbar-width: thin;
+}
+
+/* Scroll bar styling for Chrome */
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+/* Track */
+.planListContainerColor::-webkit-scrollbar-track {
+  background-color: rgba(241, 210, 164, 0.85);
+}
+.mealListContainerColor::-webkit-scrollbar-track {
+  background-color: rgba(21, 204, 119, 0.85);
+}
+.nutritionListContainerColor::-webkit-scrollbar-track {
+  background-color: rgba(117, 211, 255, 0.85);
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.5); 
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,1);
+}
+
+/* Scroll bar styling for Firefox */
+.scroller {
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
+}

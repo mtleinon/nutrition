@@ -8,6 +8,7 @@ import uuidv1 from 'uuid/v1';
 import IconWithTooltip from './IconWithTooltip';
 import { MdAddCircle } from 'react-icons/md';
 import { MdDetails } from 'react-icons/md';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 export default function PlansList() {
   const planDispatch = useContext(PlanDispatchContext);
@@ -16,7 +17,9 @@ export default function PlansList() {
   const show = useContext(ShowContext);
   return (
     <div
-      className={'planList' + (show.showPlans ? '' : ' closedList')}
+      className={
+        'planListColor planList' + (show.showPlans ? '' : ' closedList')
+      }
       // style={{ height: show.showPlans ? '100%' : '1.8rem' }}
     >
       <div className="listTitleRow">
@@ -54,7 +57,7 @@ export default function PlansList() {
         </div>
       </div>
       {show.showPlans && (
-        <div className="listContainer">
+        <div className="planListContainerColor listContainer">
           <ul>
             {plans.map(plan => (
               <Plan key={plan.id} plan={plan} />
