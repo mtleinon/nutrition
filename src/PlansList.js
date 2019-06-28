@@ -8,7 +8,6 @@ import uuidv1 from 'uuid/v1';
 import IconWithTooltip from './IconWithTooltip';
 import { MdAddCircle } from 'react-icons/md';
 import { MdDetails } from 'react-icons/md';
-import { Scrollbars } from 'react-custom-scrollbars';
 
 export default function PlansList() {
   const planDispatch = useContext(PlanDispatchContext);

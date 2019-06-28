@@ -8,7 +8,6 @@ import { MdAddCircle } from 'react-icons/md';
 import { MdDetails } from 'react-icons/md';
 import { ShowContext } from './context/show.context';
 import { ShowDispatchContext } from './context/show.context';
-import { Scrollbars } from 'react-custom-scrollbars';
 
 export default function MealsList() {
   const meals = useContext(MealContext);

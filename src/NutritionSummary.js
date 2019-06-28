@@ -20,21 +20,6 @@ export default function NutritionSummary({ name, meal, showBorderTop }) {
   console.log(meal);
   console.log(mealNutritions);
 
-  // const nutritionSummary = {};
-  // Object.keys(nutritionInfo).forEach((key, i) => {
-  //   if (i > 1) {
-  //     nutritionSummary[key.toString()] = 0;
-  //   }
-  // });
-  // console.log(summaryInit);
-  // const summary = mealNutritions.reduce((summ, cur) => {
-  //   const res = {};
-  //   Object.keys(summ).forEach(key => {
-  //     res[key] = summ[key] + (cur[key] * cur.amount) / 100;
-  //   });
-  //   return res;
-  // }, summaryInit);
-
   const summaryInit = [];
   nutritionInfo.forEach(info => {
     summaryInit[info.id] = 0;
@@ -52,6 +37,36 @@ export default function NutritionSummary({ name, meal, showBorderTop }) {
   }, summaryInit);
   console.log(summary);
 
+  // If recommendation exists for the micronutrient, return
+  // value, micronutrient recommentation and value % of recommendation
+  // otherwise return value and two 0's.
+  const recommendationAndValue = (nutritionInfo, value) => {
+    const recommendation =
+      nutritionInfo &&
+      nutritionInfo.recommendations &&
+      nutritionInfo.recommendations[0].amounts &&
+      nutritionInfo.recommendations[0].amounts[0].amount;
+
+    return recommendation ? (
+      <>
+        <div className="nutritionValue">
+          {recommendation >= 100
+            ? recommendation.toFixed(0)
+            : recommendation.toFixed(1)}
+        </div>
+        <div className="nutritionValue">
+          {(recommendation > 0 ? (value / recommendation) * 100 : 0).toFixed(0)}
+          %
+        </div>
+      </>
+    ) : (
+      <>
+        <div className="nutritionValue">-</div>
+        <div className="nutritionValue">-</div>
+      </>
+    );
+  };
+
   return (
     <div>
       <ul>
@@ -60,43 +75,13 @@ export default function NutritionSummary({ name, meal, showBorderTop }) {
             <div className="nutritionName">
               {i}. {nutritionInfo[i].name}
             </div>
-            <div className="nutritionValue">{value.toFixed(1)}</div>
-            {nutritionInfo[i] &&
-            nutritionInfo[i].recommendations &&
-            nutritionInfo[i].recommendations[0].amounts ? (
-              <>
-                <div className="nutritionValue">
-                  {nutritionInfo[
-                    i
-                  ].recommendations[0].amounts[0].amount.toFixed(1)}
-                </div>
-                <div className="nutritionValue">
-                  {(nutritionInfo[i].recommendations[0].amounts[0].amount > 0
-                    ? (value /
-                        nutritionInfo[i].recommendations[0].amounts[0].amount) *
-                      100
-                    : 0
-                  ).toFixed(0)}
-                  %
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="nutritionValue">0</div>
-                <div className="nutritionValue">0</div>
-              </>
-            )}
+            <div className="nutritionValue">
+              {value >= 100 ? value.toFixed(0) : value.toFixed(1)}
+            </div>
+            {recommendationAndValue(nutritionInfo[i], value)}
           </li>
         ))}
       </ul>
     </div>
-    // <>
-    //   <div className="nutritionName">{name}</div>
-    //   <div className="nutritionValue">{summary.energy.toFixed(1)}</div>
-    //   <div className="nutritionValue">{summary.protein.toFixed(1)}</div>
-    //   <div className="nutritionValue">{summary.fet.toFixed(1)}</div>
-    //   <div className="nutritionValue">{summary.carbohydrates.toFixed(1)}</div>
-    //   {/* extra marginRight for amount and delete icon which are not in this summary row */}
-    // </>
   );
 }

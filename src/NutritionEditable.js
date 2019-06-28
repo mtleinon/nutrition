@@ -24,7 +24,6 @@ export default function NutritionEditable({ nutrition }) {
         width="100%"
       />
       <EditableValue
-        // width="3rem"
         width="100%"
         initialValue={nutrition.energy}
         name="energy"

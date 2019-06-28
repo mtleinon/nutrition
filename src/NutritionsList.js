@@ -11,7 +11,6 @@ import { ShowDispatchContext } from './context/show.context';
 import { MdDetails } from 'react-icons/md';
 
 import { MealContext } from './context/meal.context';
-import { Scrollbars } from 'react-custom-scrollbars';
 
 export default function NutritionsList() {
   const nutritions = useContext(NutritionContext).nutritions;
