@@ -7,6 +7,8 @@ import { ShowDispatchContext } from './context/show.context';
 import uuidv1 from 'uuid/v1';
 import IconWithTooltip from './IconWithTooltip';
 import { MdAddCircle } from 'react-icons/md';
+import { MdExpandLess } from 'react-icons/md';
+import { MdExpandMore } from 'react-icons/md';
 import { MdDetails } from 'react-icons/md';
 
 export default function PlansList() {
@@ -14,6 +16,14 @@ export default function PlansList() {
   const showDispatch = useContext(ShowDispatchContext);
   const plans = useContext(PlanContext);
   const show = useContext(ShowContext);
+
+  const toggleShowPlans = () => {
+    showDispatch({
+      type: 'TOGGLE_SHOW',
+      listName: 'showPlans'
+    });
+  };
+
   return (
     <div
       className={
@@ -24,18 +34,15 @@ export default function PlansList() {
       <div className="listTitleRow">
         <div className="listTitle">Plans</div>
         <div className="icons">
-          <IconWithTooltip tooltipText="Show plans">
-            <MdDetails
-              className="icon"
-              style={{ color: 'green' }}
-              onClick={() =>
-                showDispatch({
-                  type: 'TOGGLE_SHOW',
-                  listName: 'showPlans'
-                })
-              }
-            />
-          </IconWithTooltip>
+          {show.showPlans ? (
+            <IconWithTooltip tooltipText="Hide plans">
+              <MdExpandLess className="icon" onClick={toggleShowPlans} />
+            </IconWithTooltip>
+          ) : (
+            <IconWithTooltip tooltipText="Show plans">
+              <MdExpandMore className="icon" onClick={toggleShowPlans} />
+            </IconWithTooltip>
+          )}
           <IconWithTooltip tooltipText="ShAdd new plan">
             <MdAddCircle
               className="icon"

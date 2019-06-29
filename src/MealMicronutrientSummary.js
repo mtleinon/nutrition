@@ -2,8 +2,10 @@ import React, { useContext } from 'react';
 import { MealContext } from './context/meal.context';
 import { NutritionContext } from './context/nutrition.context';
 import { ShowContext } from './context/show.context';
-import Bar from './Bar';
+import { MdClose } from 'react-icons/md';
 
+import Bar from './Bar';
+import IconWithTooltip from './IconWithTooltip';
 export default function MealMicronutrientSummary({ name, meal, plan, hide }) {
   const show = useContext(ShowContext);
   const allMeals = useContext(MealContext);
@@ -31,22 +33,6 @@ export default function MealMicronutrientSummary({ name, meal, plan, hide }) {
       }));
   }
 
-  // mealNutritions = plan.meals
-  // .map(meal => allMeals.find(m => m.id === meal.id))
-  // .flat()
-  // .nutritions.map(nutrition => ({
-  //   ...nutrition,
-  //   ...allNutritions[show.nutritionIds[nutrition.id]] //TODO: optimize
-  //   // ...allNutritions.find(n => n.id === nutrition.id) //TODO: optimize
-  // }));
-
-  // nutrition summary contains the properties which summ is calculated with reduce
-  // Two first properties containing "id" and "name" are removed from the object before
-  // calculation.
-  // const nutritionSummary = Object.assign({}, nutritionContext.nutritionInfo);
-  console.log(meal);
-  console.log(mealNutritions);
-
   const summaryInit = [];
   nutritionInfo.forEach(info => {
     summaryInit[info.id] = 0;
@@ -63,10 +49,6 @@ export default function MealMicronutrientSummary({ name, meal, plan, hide }) {
     return res;
   }, summaryInit);
   console.log(summary);
-
-  // If recommendation exists for the micronutrient, return
-  // value, micronutrient recommentation and value % of recommendation
-  // otherwise return value and two 0's.
 
   const getRecommendation = nutritionInfo => {
     let recommendation =
@@ -139,8 +121,12 @@ export default function MealMicronutrientSummary({ name, meal, plan, hide }) {
     <div className="report">
       <div className="reportHeading">
         <div className="reportHeadingRow">
-          {name} Micronutrient report
-          <button onClick={hide}>X</button>
+          <div className="reportHeadingTitle">{name} Micronutrient Report</div>
+          <div className="reportHeadingIcons">
+            <IconWithTooltip tooltipText="Close report">
+              <MdClose className="icon" onClick={hide} />
+            </IconWithTooltip>
+          </div>
         </div>
         <div className="reportTableHeading reportGrid">
           <div className="reportNumber">ID</div>
@@ -178,32 +164,3 @@ export default function MealMicronutrientSummary({ name, meal, plan, hide }) {
     </div>
   );
 }
-/*
-<div className="reportGrid">
-        {summary.sort(map((value, i) => (
-          <>
-            <div className="reportNumber">{i}.</div>
-            <div>{nutritionInfo[i].name}</div>
-            <div className="reportNumber">
-              {value >= 100 ? value.toFixed(0) : value.toFixed(1)}
-            </div>
-            {recommendationAndValue(nutritionInfo[i], value)}
-          </>
-        ))}
-      </div>
-*/
-/* <div className="report">
-<div className="reportHeading">{meal.name} Micronutrient report</div>
-<ul className="reportGrid">
-  {summary.map((value, i) => (
-    <li key={i} className="nutritionRow summaryBorder">
-        {i}. {nutritionInfo[i].name}
-      </div>
-      <div className="nutritionValue">
-        {value >= 100 ? value.toFixed(0) : value.toFixed(1)}
-      </div>
-      {recommendationAndValue(nutritionInfo[i], value)}
-    </li>
-  ))}
-</ul>
-</div> */

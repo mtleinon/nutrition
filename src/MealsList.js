@@ -5,6 +5,8 @@ import { MealDispatchContext } from './context/meal.context';
 import uuidv1 from 'uuid/v1';
 import IconWithTooltip from './IconWithTooltip';
 import { MdAddCircle } from 'react-icons/md';
+import { MdExpandLess } from 'react-icons/md';
+import { MdExpandMore } from 'react-icons/md';
 import { MdDetails } from 'react-icons/md';
 import { ShowContext } from './context/show.context';
 import { ShowDispatchContext } from './context/show.context';
@@ -14,6 +16,13 @@ export default function MealsList() {
   const mealDispatch = useContext(MealDispatchContext);
   const showDispatch = useContext(ShowDispatchContext);
   const show = useContext(ShowContext);
+
+  const toggleShowMeals = () => {
+    showDispatch({
+      type: 'TOGGLE_SHOW',
+      listName: 'showMeals'
+    });
+  };
   return (
     <div
       className={
@@ -23,19 +32,15 @@ export default function MealsList() {
       <div className="listTitleRow">
         <div className="listTitle">Meals</div>
         <div className="icons">
-          <IconWithTooltip tooltipText="Show meals">
-            <MdDetails
-              className="icon"
-              style={{ color: 'green' }}
-              onClick={() =>
-                showDispatch({
-                  type: 'TOGGLE_SHOW',
-                  listName: 'showMeals'
-                })
-              }
-            />
-          </IconWithTooltip>
-
+          {show.showMeals ? (
+            <IconWithTooltip tooltipText="Hide meals">
+              <MdExpandLess className="icon" onClick={toggleShowMeals} />
+            </IconWithTooltip>
+          ) : (
+            <IconWithTooltip tooltipText="Show meals">
+              <MdExpandMore className="icon" onClick={toggleShowMeals} />
+            </IconWithTooltip>
+          )}
           <IconWithTooltip tooltipText="Add new meal">
             <MdAddCircle
               className="icon"

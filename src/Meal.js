@@ -8,7 +8,10 @@ import NutritionHeading from './NutritionHeading';
 import EditableValue from './EditableValue';
 import IconWithTooltip from './IconWithTooltip';
 import { MdAddCircle } from 'react-icons/md';
+import { MdExpandMore } from 'react-icons/md';
+import { MdExpandLess } from 'react-icons/md';
 import { MdDetails } from 'react-icons/md';
+import { MdAssignment } from 'react-icons/md';
 import { MdModeEdit } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
 import MealSummary from './MealSummary';
@@ -87,7 +90,12 @@ export default function Meal({ meal }) {
       });
     }
   };
-
+  const toggleShowSummary = () => {
+    setShowContent(state => ({
+      ...state,
+      summary: !state.summary
+    }));
+  };
   return (
     <>
       <Modal isShowing={showReport} hide={toggleShowReport}>
@@ -110,19 +118,17 @@ export default function Meal({ meal }) {
 
           <div className="icons">
             <IconWithTooltip tooltipText="Show micronutrient report from the meal">
-              <MdDetails className="icon" onClick={toggleShowReport} />
+              <MdAssignment className="icon" onClick={toggleShowReport} />
             </IconWithTooltip>
-            <IconWithTooltip tooltipText="Show nutrients of the meal">
-              <MdDetails
-                className="icon"
-                onClick={() =>
-                  setShowContent(state => ({
-                    ...state,
-                    summary: !state.summary
-                  }))
-                }
-              />
-            </IconWithTooltip>
+            {showContent.summary ? (
+              <IconWithTooltip tooltipText="Hide nutrients of the meal">
+                <MdExpandLess className="icon" onClick={toggleShowSummary} />
+              </IconWithTooltip>
+            ) : (
+              <IconWithTooltip tooltipText="Show nutrients of the meal">
+                <MdExpandMore className="icon" onClick={toggleShowSummary} />
+              </IconWithTooltip>
+            )}
             <IconWithTooltip tooltipText="Show details nutrients of the meal">
               <MdDetails
                 className="icon"

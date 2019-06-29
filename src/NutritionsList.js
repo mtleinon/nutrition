@@ -5,6 +5,8 @@ import { NutritionDispatchContext } from './context/nutrition.context';
 import uuidv1 from 'uuid/v1';
 import IconWithTooltip from './IconWithTooltip';
 import { MdAddCircle } from 'react-icons/md';
+import { MdExpandLess } from 'react-icons/md';
+import { MdExpandMore } from 'react-icons/md';
 import NutritionHeading from './NutritionHeading';
 import { ShowContext } from './context/show.context';
 import { ShowDispatchContext } from './context/show.context';
@@ -68,6 +70,13 @@ export default function NutritionsList() {
     return meal ? meal.name : '';
   };
 
+  const toggleShowNutritions = () => {
+    showDispatch({
+      type: 'TOGGLE_SHOW',
+      listName: 'showNutritions'
+    });
+  };
+
   return (
     <div
       className={
@@ -90,7 +99,7 @@ export default function NutritionsList() {
             <button
               disabled={page <= 1}
               style={{ width: '1rem' }}
-              onClick={e => setPage(page - 1)}
+              onClick={() => setPage(page - 1)}
             >
               -
             </button>
@@ -124,18 +133,16 @@ export default function NutritionsList() {
           />
         </div>
         <div className="icons">
-          <IconWithTooltip tooltipText="Show plans">
-            <MdDetails
-              className="icon"
-              style={{ color: 'green' }}
-              onClick={() =>
-                showDispatch({
-                  type: 'TOGGLE_SHOW',
-                  listName: 'showNutritions'
-                })
-              }
-            />
-          </IconWithTooltip>
+          {show.showNutritions ? (
+            <IconWithTooltip tooltipText="Hide nutritions">
+              <MdExpandLess className="icon" onClick={toggleShowNutritions} />
+            </IconWithTooltip>
+          ) : (
+            <IconWithTooltip tooltipText="Show nutritions">
+              <MdExpandMore className="icon" onClick={toggleShowNutritions} />
+            </IconWithTooltip>
+          )}
+
           <IconWithTooltip tooltipText="Add new meal">
             <MdAddCircle
               className="icon"

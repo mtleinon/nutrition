@@ -73,7 +73,7 @@ export default function NutritionSummary({ name, meal, showBorderTop }) {
         {summary.map((value, i) => (
           <li key={i} className="nutritionRow summaryBorder">
             <div className="nutritionName">
-              {i}. {nutritionInfo[i].name}
+              {i}. {nutritionInfo[i].name.fi}
             </div>
             <div className="nutritionValue">
               {value >= 100 ? value.toFixed(0) : value.toFixed(1)}
