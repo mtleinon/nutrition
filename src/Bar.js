@@ -13,7 +13,8 @@ export default function Bar({ value1, value2 }) {
         width: '100px',
         height: '1.5rem',
         backgroundColor: '#eee',
-        margin: '0 0 0 1rem'
+        margin: '0 0 0 1rem',
+        overflow: 'hidden'
       }}
     >
       <div

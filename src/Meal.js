@@ -93,7 +93,7 @@ export default function Meal({ meal }) {
       <Modal isShowing={showReport} hide={toggleShowReport}>
         <MealMicronutrientSummary
           meal={meal}
-          showBorderTop={true}
+          name={meal.name}
           hide={toggleShowReport}
         />
       </Modal>

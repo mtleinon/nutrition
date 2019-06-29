@@ -1,18 +1,44 @@
 import React, { useContext } from 'react';
+import { MealContext } from './context/meal.context';
 import { NutritionContext } from './context/nutrition.context';
 import { ShowContext } from './context/show.context';
 import Bar from './Bar';
 
-export default function MealMicronutrientSummary({ name, meal, hide }) {
+export default function MealMicronutrientSummary({ name, meal, plan, hide }) {
   const show = useContext(ShowContext);
+  const allMeals = useContext(MealContext);
   const nutritionContext = useContext(NutritionContext);
   const allNutritions = nutritionContext.nutritions;
   const nutritionInfo = nutritionContext.nutritionInfo;
-  const mealNutritions = meal.nutritions.map(nutrition => ({
-    ...nutrition,
-    ...allNutritions[show.nutritionIds[nutrition.id]] //TODO: optimize
-    // ...allNutritions.find(n => n.id === nutrition.id) //TODO: optimize
-  }));
+
+  let mealNutritions;
+  if (meal) {
+    mealNutritions = meal.nutritions.map(nutrition => ({
+      ...nutrition,
+      ...allNutritions[show.nutritionIds[nutrition.id]] //TODO: optimize
+      // ...allNutritions.find(n => n.id === nutrition.id) //TODO: optimize
+    }));
+  }
+  if (plan) {
+    console.log(plan);
+
+    mealNutritions = plan.meals
+      .map(meal => allMeals.find(m => m.id === meal.id).nutritions)
+      .flat()
+      .map(nutrition => ({
+        ...nutrition,
+        ...allNutritions[show.nutritionIds[nutrition.id]]
+      }));
+  }
+
+  // mealNutritions = plan.meals
+  // .map(meal => allMeals.find(m => m.id === meal.id))
+  // .flat()
+  // .nutritions.map(nutrition => ({
+  //   ...nutrition,
+  //   ...allNutritions[show.nutritionIds[nutrition.id]] //TODO: optimize
+  //   // ...allNutritions.find(n => n.id === nutrition.id) //TODO: optimize
+  // }));
 
   // nutrition summary contains the properties which summ is calculated with reduce
   // Two first properties containing "id" and "name" are removed from the object before
@@ -42,11 +68,21 @@ export default function MealMicronutrientSummary({ name, meal, hide }) {
   // value, micronutrient recommentation and value % of recommendation
   // otherwise return value and two 0's.
 
-  const getRecommendation = nutritionInfo =>
-    nutritionInfo &&
-    nutritionInfo.recommendations &&
-    nutritionInfo.recommendations[0].amounts &&
-    nutritionInfo.recommendations[0].amounts[0].amount;
+  const getRecommendation = nutritionInfo => {
+    let recommendation =
+      nutritionInfo &&
+      nutritionInfo.dri &&
+      nutritionInfo.dri.rda &&
+      nutritionInfo.dri.rda.males;
+    if (recommendation) return recommendation;
+    recommendation =
+      nutritionInfo && nutritionInfo.dri && nutritionInfo.dri.rda;
+    if (recommendation) return recommendation;
+    recommendation = nutritionInfo && nutritionInfo.dri && nutritionInfo.dri.ai;
+    return recommendation;
+  };
+  const getUpperLimit = nutritionInfo =>
+    nutritionInfo && nutritionInfo.dri && nutritionInfo.dri.ul;
 
   const recommendationAndValue = (nutritionInfo, value) => {
     const recommendation = getRecommendation(nutritionInfo);
@@ -74,12 +110,14 @@ export default function MealMicronutrientSummary({ name, meal, hide }) {
     );
   };
 
-  const microNutritionComparison = (a, b) => {
-    if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-    if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+  const microNutritionComparisonByName = (a, b) => {
+    // console.log(a, b);
+
+    if (a.name.fi.toLowerCase() < b.name.fi.toLowerCase()) return -1;
+    if (a.name.fi.toLowerCase() > b.name.fi.toLowerCase()) return 1;
     return 0;
   };
-  const microNutritionComparison2 = (a, b) => {
+  const microNutritionComparisonByAmountOfRecommendation = (a, b) => {
     const aRecommendation = getRecommendation(a);
     const bRecommendation = getRecommendation(b);
     if (aRecommendation === undefined && bRecommendation === undefined) {
@@ -101,7 +139,7 @@ export default function MealMicronutrientSummary({ name, meal, hide }) {
     <div className="report">
       <div className="reportHeading">
         <div className="reportHeadingRow">
-          {meal.name} Micronutrient report
+          {name} Micronutrient report
           <button onClick={hide}>X</button>
         </div>
         <div className="reportTableHeading reportGrid">
@@ -110,16 +148,17 @@ export default function MealMicronutrientSummary({ name, meal, hide }) {
           <div className="reportNumber">Amount</div>
           <div className="reportNumber">Rec.</div>
           <div className="reportNumber">% of rec.</div>
+          <div className="reportNumber">UL</div>
         </div>
       </div>
       <div className="reportGrid">
         {nutritionInfo
           .slice(2)
-          .sort(microNutritionComparison)
+          .sort(microNutritionComparisonByName)
           .map(microNutrition => (
-            <>
+            <React.Fragment key={microNutrition.id}>
               <div className="reportNumber">{microNutrition.id}.</div>
-              <div>{microNutrition.name}</div>
+              <div>{microNutrition.name.fi}</div>
               <div className="reportNumber">
                 {summary[microNutrition.id] >= 100
                   ? summary[microNutrition.id].toFixed(0)
@@ -129,7 +168,11 @@ export default function MealMicronutrientSummary({ name, meal, hide }) {
                 microNutrition,
                 summary[microNutrition.id]
               )}
-            </>
+              <div className="reportNumber">
+                {getUpperLimit(microNutrition) &&
+                  getUpperLimit(microNutrition).toFixed(0)}
+              </div>
+            </React.Fragment>
           ))}
       </div>
     </div>

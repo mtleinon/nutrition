@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import finelli from './finelli5';
 import { NutritionDispatchContext } from './context/nutrition.context';
-// import { NutritionContext } from './context/nutrition.context';
-// import { ShowDispatchContext } from './context/show.context';
 const finelli3 = require('./finelli3.json');
 
 export default function ReadNutritions() {
@@ -10,291 +8,257 @@ export default function ReadNutritions() {
   let nutrition;
 
   const nutritionInfo = [
-    { id: 0, name: 'id' },
-    { id: 1, name: 'name' },
-    { id: 2, name: 'energia, laskennallinen (kJ)', unit: 'kJ' },
-    { id: 3, name: 'hiilihydraatti imeytyva (g)', unit: 'g' },
-    { id: 4, name: 'rasva (g)', unit: 'g' },
-    { id: 5, name: 'proteiini (g)', unit: 'g' },
-    { id: 6, name: 'alkoholi (g)', unit: 'g' },
-    { id: 7, name: 'kuitu, kokonais- (g)', unit: 'g' },
-    { id: 8, name: 'orgaaniset hapot (g)', unit: 'g' },
-    { id: 9, name: 'sokerialkoholi (g)', unit: 'g' },
-    { id: 10, name: 'tarkkelys (g)', unit: 'g' },
-    { id: 11, name: 'sokerit (g)', unit: 'g' },
-    { id: 12, name: 'fruktoosi (g)', unit: 'g' },
-    { id: 13, name: 'galaktoosi (g)', unit: 'g' },
-    { id: 14, name: 'glukoosi (g)', unit: 'g' },
-    { id: 15, name: 'laktoosi (g)', unit: 'g' },
-    { id: 16, name: 'maltoosi (g)', unit: 'g' },
-    { id: 17, name: 'sakkaroosi (g)', unit: 'g' },
+    { id: 0, name: { fi: 'id' } },
+    { id: 1, name: { fi: 'name' } },
+    { id: 2, name: { fi: 'energia, laskennallinen (kJ)' }, unit: 'kJ' },
+    { id: 3, name: { fi: 'hiilihydraatti imeytyva (g)' }, unit: 'g' },
+    { id: 4, name: { fi: 'rasva (g)' }, unit: 'g' },
+    { id: 5, name: { fi: 'proteiini (g)' }, unit: 'g' },
+    { id: 6, name: { fi: 'alkoholi (g)' }, unit: 'g' },
+    { id: 7, name: { fi: 'kuitu, kokonais- (g)' }, unit: 'g' },
+    { id: 8, name: { fi: 'orgaaniset hapot (g)' }, unit: 'g' },
+    { id: 9, name: { fi: 'sokerialkoholi (g)' }, unit: 'g' },
+    { id: 10, name: { fi: 'tarkkelys (g)' }, unit: 'g' },
+    { id: 11, name: { fi: 'sokerit (g)' }, unit: 'g' },
+    { id: 12, name: { fi: 'fruktoosi (g)' }, unit: 'g' },
+    { id: 13, name: { fi: 'galaktoosi (g)' }, unit: 'g' },
+    { id: 14, name: { fi: 'glukoosi (g)' }, unit: 'g' },
+    { id: 15, name: { fi: 'laktoosi (g)' }, unit: 'g' },
+    { id: 16, name: { fi: 'maltoosi (g)' }, unit: 'g' },
+    { id: 17, name: { fi: 'sakkaroosi (g)' }, unit: 'g' },
     {
       id: 18,
-      name: 'polysakkaridi, vesiliukoinen ei-selluloosa (g)',
+      name: { fi: 'polysakkaridi, vesiliukoinen ei-selluloosa (g)' },
       unit: 'g'
     },
-    { id: 19, name: 'kuitu veteen liukenematon (g)', unit: 'g' },
-    { id: 20, name: 'rasvahapot yhteensa (g)', unit: 'g' },
-    { id: 21, name: 'rasvahapot monityydyttymattomat (g)', unit: 'g' },
-    { id: 22, name: 'rasvahapot yksittaistyydyttymattomat cis (g)', unit: 'g' },
-    { id: 23, name: 'rasvahapot tyydyttyneet (g)', unit: 'g' },
-    { id: 24, name: 'rasvahapot trans (g)', unit: 'g' },
-    { id: 25, name: 'rasvahapot n-3 monityydyttymattomat (g)', unit: 'g' },
-    { id: 26, name: 'rasvahapot n-6 monityydyttymattomat (g)', unit: 'g' },
+    { id: 19, name: { fi: 'kuitu veteen liukenematon (g)' }, unit: 'g' },
+    { id: 20, name: { fi: 'rasvahapot yhteensa (g)' }, unit: 'g' },
+    { id: 21, name: { fi: 'rasvahapot monityydyttymattomat (g)' }, unit: 'g' },
+    {
+      id: 22,
+      name: { fi: 'rasvahapot yksittaistyydyttymattomat cis (g)' },
+      unit: 'g'
+    },
+    { id: 23, name: { fi: 'rasvahapot tyydyttyneet (g)' }, unit: 'g' },
+    { id: 24, name: { fi: 'rasvahapot trans (g)' }, unit: 'g' },
+    {
+      id: 25,
+      name: { fi: 'rasvahapot n-3 monityydyttymattomat (g)' },
+      unit: 'g'
+    },
+    {
+      id: 26,
+      name: { fi: 'rasvahapot n-6 monityydyttymattomat (g)' },
+      unit: 'g'
+    },
     {
       id: 27,
-      name: 'rasvahappo 18:2 cis,cis n-6 (linolihappo) (mg)',
+      name: { fi: 'rasvahappo 18:2 cis,cis n-6 (linolihappo) (mg)' },
       unit: 'mg'
     },
     {
       id: 28,
-      name: 'rasvahappo 18:3 n-3 (alfalinoleenihappo) (mg)',
+      name: { fi: 'rasvahappo 18:3 n-3 (alfalinoleenihappo) (mg)' },
       unit: 'mg'
     },
-    { id: 29, name: 'rasvahappo 20:5 n-3 (EPA) (mg)', unit: 'mg' },
-    { id: 30, name: 'rasvahappo 22:6 n-3 (DHA) (mg)', unit: 'mg' },
-    { id: 31, name: 'kolesteroli (GC) (mg)', unit: 'mg' },
-    { id: 32, name: 'sterolit (mg)', unit: 'mg' },
+    { id: 29, name: { fi: 'rasvahappo 20:5 n-3 (EPA) (mg)' }, unit: 'mg' },
+    { id: 30, name: { fi: 'rasvahappo 22:6 n-3 (DHA) (mg)' }, unit: 'mg' },
+    { id: 31, name: { fi: 'kolesteroli (GC) (mg)' }, unit: 'mg' },
+    { id: 32, name: { fi: 'sterolit (mg)' }, unit: 'mg' },
     {
       id: 33,
-      name: 'kalsium (mg)',
+      name: { fi: 'kalsium', en: 'calcium' },
       unit: 'mg',
-      recommendations: [
-        {
-          amounts: [{ amount: 800, info: '' }],
-          unit: 'mg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        ai: 1000,
+        ul: 2500
+      }
     },
     {
       id: 34,
-      name: 'rauta (mg)',
+      name: { fi: 'rauta', en: 'iron' },
       unit: 'mg',
-      recommendations: [
-        {
-          amounts: [{ amount: 9, info: '' }],
-          unit: 'mg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        rda: {
+          males: 8,
+          females: 18
+        },
+        ai: 1000,
+        ul: 45
+      }
     },
     {
       id: 35,
-      name: 'jodidi (jodi) (g)',
-      unit: 'g',
-      recommendations: [
-        {
-          amounts: [{ amount: 150, info: '' }],
-          unit: 'yg',
-          source: 'http://www.voimaaruuasta.fi'
+      name: { fi: 'jodidi (jodi)', en: 'iodine' },
+      unit: 'yg',
+      dri: {
+        rda: {
+          males: 150,
+          females: 150
         }
-      ]
+      }
     },
     {
       id: 36,
-      name: 'kalium (mg)',
+      name: { fi: 'kalium', en: 'potassium' },
       unit: 'mg',
-      recommendations: [
-        {
-          amounts: [
-            { amount: 3500, info: 'men' },
-            { amount: 3100, info: 'women' }
-          ],
-          unit: 'g',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        ai: 4700
+      }
     },
     {
       id: 37,
-      name: 'magnesium (mg)',
+      name: { fi: 'magnesium', en: 'magnesium' },
       unit: 'mg',
-      recommendations: [
-        {
-          amounts: [
-            { amount: 350, info: 'men' },
-            { amount: 350, info: 'women' }
-          ],
-          unit: 'mg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        rda: { males: 420, females: 320 }
+      }
     },
-    { id: 38, name: 'natrium (mg)', unit: 'mg' },
-    { id: 39, name: 'suola (mg)', unit: 'mg' },
+    {
+      id: 38,
+      name: { fi: 'natrium', en: 'sodium' },
+      unit: 'mg',
+      dri: {
+        ai: 1500,
+        ul: 2300
+      }
+    },
+    {
+      id: 39,
+      name: { fi: 'suola', en: 'salt, sodium and chloride' },
+      dri: {
+        ai: 3800,
+        ul: 5900
+      },
+      unit: 'mg'
+    },
     {
       id: 40,
-      name: 'fosfori (mg)',
+      name: { fi: 'fosfori', en: 'phosphorus' },
       unit: 'mg',
-      recommendations: [
-        {
-          amounts: [{ amount: 600, info: '' }],
-          unit: 'mg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        rda: 700,
+        ul: 4000
+      }
     },
     {
       id: 41,
-      name: 'seleeni (g)',
-      unit: 'g',
-      recommendations: [
-        {
-          amounts: [{ amount: 60, info: 'men' }, { amount: 50, info: 'women' }],
-          unit: 'yg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      name: { fi: 'seleeni', en: 'selenium' },
+      unit: 'yg',
+      dri: {
+        rda: 55
+      }
     },
     {
       id: 42,
-      name: 'sinkki (mg)',
+      name: { fi: 'sinkki', en: 'zinc' },
       unit: 'mg',
-      recommendations: [
-        {
-          amounts: [{ amount: 9, info: 'men' }, { amount: 7, info: 'women' }],
-          unit: 'mg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        rda: { males: 11, females: 8 }
+      }
     },
-    { id: 43, name: 'tryptofaani (mg)', unit: 'mg' },
+    { id: 43, name: { fi: 'tryptofaani (mg)' }, unit: 'mg' },
     {
       id: 44,
-      name: 'folaatti, kokonais- (yg)',
+      name: { fi: 'folaatti', en: 'folate' },
       unit: 'yg',
-      recommendations: [
-        {
-          amounts: [{ amount: 300, info: '' }],
-          unit: 'yg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        rda: 400
+      }
     },
-    { id: 45, name: 'niasiiniekvivalentti NE (mg)', unit: 'mg' },
+    { id: 45, name: { fi: 'niasiiniekvivalentti NE' }, unit: 'mg' },
     {
       id: 46,
-      name: 'niasiini (nikotiinihappo + nikotiiniamidi) (mg)',
+      name: {
+        fi: 'niasiini (nikotiinihappo + nikotiiniamidi)',
+        fiLong: 'niasiini (nikotiinihappo + nikotiiniamidi)',
+        en: 'niacin'
+      },
       unit: 'mg',
-      recommendations: [
-        {
-          amounts: [{ amount: 17, info: 'men' }, { amount: 14, info: 'women' }],
-          unit: 'NE',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        rda: { males: 16, females: 14 },
+        ul: 35
+      }
     },
     {
       id: 47,
-      name: 'pyridoksiini vitameerit (vetykloridi) (B6) (mg)',
+      name: {
+        fi: 'B6-vitamiini',
+        fiLong: 'pyridoksiini vitameerit (vetykloridi) (B6) (mg)',
+        en: 'vitamin B6'
+      },
       unit: 'mg',
-      recommendations: [
-        {
-          amounts: [
-            { amount: 1.6, info: 'men' },
-            { amount: 1.2, info: 'women' }
-          ],
-          unit: 'mg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        rda: 1.3,
+        ul: 100
+      }
     },
     {
       id: 48,
-      name: 'riboflaviini (B2) (mg)',
+      name: { fi: 'B2-vitamiini, riboflaviini', en: 'vitamin B2, riboflavin' },
       unit: 'mg',
-      recommendations: [
-        {
-          amounts: [
-            { amount: 1.5, info: 'men' },
-            { amount: 1.3, info: 'women' }
-          ],
-          unit: 'mg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        rda: { males: 1.3, females: 1.1 }
+      }
     },
     {
       id: 49,
-      name: 'tiamiini (B1) (mg)',
+      name: { fi: 'B1-vitamiini, tiamiini', en: 'vitamin B1, thiamin' },
       unit: 'mg',
-      recommendations: [
-        {
-          amounts: [{ amount: 1.3, info: 'men' }, { amount: 1, info: 'women' }],
-          unit: 'mg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        rda: { males: 1.2, females: 1.1 }
+      }
     },
     {
       id: 50,
-      name: 'B12-vitamiini (kobalamiini) (g)',
+      name: { fi: 'B12-vitamiini, kobalamiini', en: 'vitamin B12, cobalamin' },
       unit: 'yg',
-      recommendations: [
-        {
-          amounts: [{ amount: 2, info: '' }],
-          unit: 'yg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        rda: 2.4
+      }
     },
     {
       id: 51,
-      name: 'C-vitamiini (mg)',
+      name: { fi: 'C-vitamiini (mg)', en: 'vitamin C' },
       unit: 'mg',
-      recommendations: [
-        {
-          amounts: [{ amount: 75, info: '' }],
-          unit: 'mg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        rda: { males: 90, females: 75 }
+      }
     },
     {
       id: 52,
-      name: 'A-vitamiini RAE (g)',
-      unit: 'g',
-      recommendations: [
-        {
-          amounts: [
-            { amount: 900, info: 'men' },
-            { amount: 700, info: 'women' }
-          ],
-          unit: 'RE',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      name: { fi: 'A-vitamiini RAE', en: 'vitamin A' },
+      unit: 'yg',
+      dri: {
+        rda: { males: 900, females: 700 }
+      }
     },
-    { id: 53, name: 'karotenoidit (g)', unit: 'g' },
+    { id: 53, name: { fi: 'karotenoidit', en: 'carotenoids' }, unit: 'g' },
     {
       id: 54,
-      name: 'D-vitamiini (g)',
-      unit: 'g',
-      recommendations: [
-        {
-          amounts: [
-            { amount: 10, info: 'under 60 years' },
-            { amount: 20, info: 'over 60 years' }
-          ],
-          unit: 'yg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      name: { fi: 'D-vitamiini', en: 'vitamin D' },
+      unit: 'yg',
+      dri: {
+        rda: 5,
+        ul: 50
+      }
     },
     {
       id: 55,
-      name: 'E-vitamiini alfatokoferoli (mg)',
+      name: { fi: 'E-vitamiini alfatokoferoli', en: 'vitamin E' },
       unit: 'mg',
-      recommendations: [
-        {
-          amounts: [{ amount: 10, info: 'men' }, { amount: 8, info: 'women' }],
-          unit: 'yg',
-          source: 'http://www.voimaaruuasta.fi'
-        }
-      ]
+      dri: {
+        rda: 15
+      }
     },
-    { id: 56, name: 'K-vitamiini (g)', unit: 'g' }
+    {
+      id: 56,
+      name: { fi: 'K-vitamiini', en: 'vitamin K' },
+      unit: 'yg',
+      dri: {
+        rda: { males: 120, females: 90 }
+      }
+    }
   ];
 
   // {recommendation: [{man: 900, woman: 700, unit:"RE", source: "http://www.voimaaruuasta.fi"}]}
@@ -351,11 +315,6 @@ export default function ReadNutritions() {
       break;
     }
     if (i === 0) {
-      // const nutritionInfo = {};
-      // for (const [j, part] of finelliNutrition.entries()) {
-      //   nutritionInfo[j.toString()] = finelliNutrition[j];
-      // }
-      // console.log(nutritionInfo);
       nutritionDispatch({
         type: 'ADD_INFO',
         nutritionInfo
@@ -378,7 +337,6 @@ export default function ReadNutritions() {
         } else {
           nutrition[j.toString()] = finelliNutrition[j];
         }
-        // console.log(nutrition);
       }
 
       nutritionDispatch({
