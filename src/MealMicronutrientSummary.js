@@ -75,8 +75,8 @@ export default function MealMicronutrientSummary({ name, meal, hide }) {
   };
 
   const microNutritionComparison = (a, b) => {
-    if (a.name < b.name) return -1;
-    if (a.name > b.name) return 1;
+    if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+    if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
     return 0;
   };
   const microNutritionComparison2 = (a, b) => {
@@ -115,7 +115,7 @@ export default function MealMicronutrientSummary({ name, meal, hide }) {
       <div className="reportGrid">
         {nutritionInfo
           .slice(2)
-          .sort(microNutritionComparison2)
+          .sort(microNutritionComparison)
           .map(microNutrition => (
             <>
               <div className="reportNumber">{microNutrition.id}.</div>
