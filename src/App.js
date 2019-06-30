@@ -10,7 +10,6 @@ import { ShowProvider } from './context/show.context';
 import ReadNutritions from './ReadNutritions';
 import ShowSetNutritionCache from './ShowSetnutritionCache';
 
-// import Test from './Test';
 function App() {
   return (
     <ShowProvider>

@@ -272,6 +272,9 @@ ul {
   grid-template-columns: 2rem minmax(6rem, 1fr) 4rem 4rem 6rem 4rem;
   grid-auto-rows: 3rem;
 }
+.narrowReportGrid {
+  grid-template-columns: 2rem minmax(6rem, 1fr) 4rem 6rem;
+}
 .reportNumber {
   justify-content: flex-end;
   padding-right: .3rem;

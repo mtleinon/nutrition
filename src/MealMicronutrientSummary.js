@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { MealContext } from './context/meal.context';
 import { NutritionContext } from './context/nutrition.context';
 import { ShowContext } from './context/show.context';
 import { MdClose } from 'react-icons/md';
+import ReactResizeDetector from 'react-resize-detector';
 
 import Bar from './Bar';
 import IconWithTooltip from './IconWithTooltip';
+
 export default function MealMicronutrientSummary({
   name,
   meal,
@@ -13,29 +15,27 @@ export default function MealMicronutrientSummary({
   nutrition,
   hide
 }) {
+  const [wideComponent, setWideComponent] = useState(true);
   const show = useContext(ShowContext);
   const allMeals = useContext(MealContext);
   const nutritionContext = useContext(NutritionContext);
   const allNutritions = nutritionContext.nutritions;
   const nutritionInfo = nutritionContext.nutritionInfo;
 
+  // Fill mealNutritions array either with a single nutrition, one meals nutritions all nutritions of all meals of a plan
   let mealNutritions = [];
   if (nutrition) {
     mealNutritions[0] = nutrition;
     mealNutritions[0].amount = 100;
     name = 100 + 'g of ' + name;
   }
-
   if (meal) {
     mealNutritions = meal.nutritions.map(nutrition => ({
       ...nutrition,
-      ...allNutritions[show.nutritionIds[nutrition.id]] //TODO: optimize
-      // ...allNutritions.find(n => n.id === nutrition.id) //TODO: optimize
+      ...allNutritions[show.nutritionIds[nutrition.id]]
     }));
   }
   if (plan) {
-    console.log(plan);
-
     mealNutritions = plan.meals
       .map(meal => allMeals.find(m => m.id === meal.id).nutritions)
       .flat()
@@ -88,10 +88,6 @@ export default function MealMicronutrientSummary({
             ? recommendation.toFixed(0)
             : recommendation.toFixed(1)}
         </div>
-        {/* <div className="nutritionValue">
-          {(recommendation > 0 ? (value / recommendation) * 100 : 0).toFixed(0)}
-          %
-        </div> */}
         <div>
           <Bar value1={value} value2={recommendation} />
         </div>
@@ -105,8 +101,6 @@ export default function MealMicronutrientSummary({
   };
 
   const microNutritionComparisonByName = (a, b) => {
-    // console.log(a, b);
-
     if (a.name.fi.toLowerCase() < b.name.fi.toLowerCase()) return -1;
     if (a.name.fi.toLowerCase() > b.name.fi.toLowerCase()) return 1;
     return 0;
@@ -129,8 +123,18 @@ export default function MealMicronutrientSummary({
     return aAmountOfRecommendation - bAmountOfRecommendation;
   };
 
+  const onResize = width => {
+    console.log(width);
+    if (width < 300) {
+      setWideComponent(false);
+    } else {
+      setWideComponent(true);
+    }
+  };
+
   return (
     <div className="report">
+      <ReactResizeDetector handleWidth onResize={onResize} />
       <div className="reportHeading">
         <div className="reportHeadingRow">
           <div className="reportHeadingTitle">{name} Micronutrient Report</div>
@@ -140,16 +144,33 @@ export default function MealMicronutrientSummary({
             </IconWithTooltip>
           </div>
         </div>
-        <div className="reportTableHeading reportGrid">
+        <div
+          className={`reportTableHeading reportGrid ${
+            wideComponent ? 'wideReportGrid' : 'narrowReportGrid'
+          }`}
+        >
           <div className="reportNumber">ID</div>
           <div>name</div>
-          <div className="reportNumber">Amount</div>
-          <div className="reportNumber">Rec.</div>
-          <div className="reportNumber">% of rec.</div>
-          <div className="reportNumber">UL</div>
+          {wideComponent ? (
+            <>
+              <div className="reportNumber">Amount</div>
+              <div className="reportNumber">Rec.</div>
+              <div className="reportNumber">% of rec.</div>
+              <div className="reportNumber">UL</div>
+            </>
+          ) : (
+            <>
+              <div className="reportNumber">Rec.</div>
+              <div className="reportNumber">% of rec.</div>
+            </>
+          )}
         </div>
       </div>
-      <div className="reportGrid">
+      <div
+        className={`reportGrid ${
+          wideComponent ? 'wideReportGrid' : 'narrowReportGrid'
+        }`}
+      >
         {nutritionInfo
           .slice(2)
           .sort(microNutritionComparisonByName)
@@ -157,19 +178,23 @@ export default function MealMicronutrientSummary({
             <React.Fragment key={microNutrition.id}>
               <div className="reportNumber">{microNutrition.id}.</div>
               <div>{microNutrition.name.fi}</div>
-              <div className="reportNumber">
-                {summary[microNutrition.id] >= 100
-                  ? summary[microNutrition.id].toFixed(0)
-                  : summary[microNutrition.id].toFixed(1)}
-              </div>
+              {wideComponent && (
+                <div className="reportNumber">
+                  {summary[microNutrition.id] >= 100
+                    ? summary[microNutrition.id].toFixed(0)
+                    : summary[microNutrition.id].toFixed(1)}
+                </div>
+              )}
               {recommendationAndValue(
                 microNutrition,
                 summary[microNutrition.id]
               )}
-              <div className="reportNumber">
-                {getUpperLimit(microNutrition) &&
-                  getUpperLimit(microNutrition).toFixed(0)}
-              </div>
+              {wideComponent && (
+                <div className="reportNumber">
+                  {getUpperLimit(microNutrition) &&
+                    getUpperLimit(microNutrition).toFixed(0)}
+                </div>
+              )}
             </React.Fragment>
           ))}
       </div>
