@@ -6,14 +6,26 @@ import { MdClose } from 'react-icons/md';
 
 import Bar from './Bar';
 import IconWithTooltip from './IconWithTooltip';
-export default function MealMicronutrientSummary({ name, meal, plan, hide }) {
+export default function MealMicronutrientSummary({
+  name,
+  meal,
+  plan,
+  nutrition,
+  hide
+}) {
   const show = useContext(ShowContext);
   const allMeals = useContext(MealContext);
   const nutritionContext = useContext(NutritionContext);
   const allNutritions = nutritionContext.nutritions;
   const nutritionInfo = nutritionContext.nutritionInfo;
 
-  let mealNutritions;
+  let mealNutritions = [];
+  if (nutrition) {
+    mealNutritions[0] = nutrition;
+    mealNutritions[0].amount = 100;
+    name = 100 + 'g of ' + name;
+  }
+
   if (meal) {
     mealNutritions = meal.nutritions.map(nutrition => ({
       ...nutrition,

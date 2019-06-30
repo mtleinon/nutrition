@@ -311,9 +311,9 @@ export default function ReadNutritions() {
 
   for (const [i, finelliNutrition] of finelli3.entries()) {
     // console.log(i, finelliNutrition);
-    if (i > 10) {
-      break;
-    }
+    // if (i > 10) {
+    //   break;
+    // }
     if (i === 0) {
       nutritionDispatch({
         type: 'ADD_INFO',

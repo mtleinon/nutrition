@@ -5,6 +5,7 @@ import EditableValue from './EditableValue';
 
 import IconWithTooltip from './IconWithTooltip';
 import { MdDetails } from 'react-icons/md';
+import { MdAssignment } from 'react-icons/md';
 
 import { MdDelete } from 'react-icons/md';
 import { MdModeEdit } from 'react-icons/md';
@@ -52,7 +53,7 @@ export default function Plan({ plan }) {
           </div>
           <div className="icons">
             <IconWithTooltip tooltipText="Show micronutrient report from the plan">
-              <MdDetails className="icon" onClick={toggleShowReport} />
+              <MdAssignment className="icon" onClick={toggleShowReport} />
             </IconWithTooltip>
             <IconWithTooltip
               tooltipText={
