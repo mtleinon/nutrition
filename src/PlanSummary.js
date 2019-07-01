@@ -53,14 +53,30 @@ export default function PlanSummary({ plan, showBorderTop }) {
   // console.log(summary);
 
   return (
-    <div
-      className={'nutritionSummary' + (showBorderTop ? ' summaryBorder' : '')}
-    >
-      <span className="nutritionName">Summary</span>
-      <span className="nutritionValue">{summary.energy.toFixed(1)}</span>
-      <span className="nutritionValue">{summary.protein.toFixed(1)}</span>
-      <span className="nutritionValue">{summary.fet.toFixed(1)}</span>
-      <span className="nutritionValue">{summary.carbohydrates.toFixed(1)}</span>
-    </div>
+    <>
+      <div className={`gridName ${showBorderTop ? 'borderTop boldText' : ''}`}>
+        Summary
+      </div>
+      <div
+        className={`gridNumber ${showBorderTop ? 'borderTop boldText' : ''}`}
+      >
+        {summary.energy.toFixed(1)}
+      </div>
+      <div
+        className={`gridNumber ${showBorderTop ? 'borderTop boldText' : ''}`}
+      >
+        {summary.protein.toFixed(1)}
+      </div>
+      <div
+        className={`gridNumber ${showBorderTop ? 'borderTop boldText' : ''}`}
+      >
+        {summary.fet.toFixed(1)}
+      </div>
+      <div
+        className={`gridNumber ${showBorderTop ? 'borderTop boldText' : ''}`}
+      >
+        {summary.carbohydrates.toFixed(1)}
+      </div>
+    </>
   );
 }

@@ -4,7 +4,7 @@ import { MealDispatchContext } from './context/meal.context';
 import { NutritionContext } from './context/nutrition.context';
 import { PlanContext } from './context/plan.context';
 import NutritionShow from './NutritionShow';
-import NutritionHeading from './NutritionHeading';
+import MealHeading from './MealHeading';
 import EditableValue from './EditableValue';
 import IconWithTooltip from './IconWithTooltip';
 import { MdAddCircle } from 'react-icons/md';
@@ -17,11 +17,13 @@ import { MdDelete } from 'react-icons/md';
 import MealSummary from './MealSummary';
 import { ShowContext } from './context/show.context';
 import NutritionSummary from './NutritionSummary';
+import MealMicronutrientSummary from './MealMicronutrientSummary';
 import useModal from './modal/useModal';
 import Modal from './modal/Modal';
-import MealMicronutrientSummary from './MealMicronutrientSummary';
+import ReactResizeDetector from 'react-resize-detector';
 
 export default function Meal({ meal }) {
+  const [wideComponent, setWideComponent] = useState(true);
   const [showContent, setShowContent] = useState({
     summary: true,
     detailedSummary: false,
@@ -96,8 +98,22 @@ export default function Meal({ meal }) {
       summary: !state.summary
     }));
   };
+
+  const onResize = width => {
+    console.log(width);
+    if (width < 500) {
+      setWideComponent(false);
+    } else {
+      setWideComponent(true);
+    }
+  };
+  const mealAmount = meal.nutritions.reduce(
+    (sum, nutrition) => sum + nutrition.amount,
+    0
+  );
   return (
     <>
+      <ReactResizeDetector handleWidth onResize={onResize} />
       <Modal isShowing={showReport} hide={toggleShowReport}>
         <MealMicronutrientSummary
           meal={meal}
@@ -109,6 +125,7 @@ export default function Meal({ meal }) {
         <div className="cardTitleRow">
           <div className="cardTitle">
             <EditableValue
+              className="gridName"
               initialValue={meal.name}
               name="name"
               updateValue={updateValue}
@@ -194,52 +211,66 @@ export default function Meal({ meal }) {
         {showContent.summary && meal.nutritions.length > 0 && (
           <div className="cardContent">
             <ul>
-              <li>
-                <div style={{ marginRight: '1.6rem' }}>
-                  <NutritionHeading printAmount={true} />
-                </div>
+              <li
+                className={`mealGrid ${!wideComponent ? 'narrowMealGrid' : ''}`}
+              >
+                <MealHeading wideComponent={wideComponent} />
               </li>
               {meal.nutritions.map(nutrition => (
-                <li key={nutrition.id}>
-                  <div className="nutritionRow ">
-                    <NutritionShow
-                      nutrition={
-                        show.nutritionIds
-                          ? // ? allNutritions[show.nutritionIds[nutrition.id]] //TODO: optimize
-                            allNutritions.find(n => n.id === nutrition.id)
-                          : allNutritions.find(n => n.id === nutrition.id)
-                      } //TODO: optimize
-                    />
-                    <EditableValue
-                      // className="nutritionValue"
-                      initialValue={nutrition.amount}
-                      name={nutrition.id}
-                      updateValue={updateNutritionAmountValue}
-                      width="3rem"
-                      type="number"
-                    />
-                    <div className="icons">
-                      <IconWithTooltip
-                        className="IconWithTooltip"
-                        tooltipText="Remove nutrition"
-                        position="right center"
-                      >
-                        <MdDelete
-                          className="icon"
-                          style={{ color: 'red' }}
-                          onClick={() => removeNutrition(nutrition.id)}
-                        />
-                      </IconWithTooltip>
-                    </div>
+                <li
+                  key={nutrition.id}
+                  className={`mealGrid ${
+                    !wideComponent ? 'narrowMealGrid' : ''
+                  }`}
+                >
+                  <NutritionShow
+                    amount={nutrition.amount}
+                    wideComponent={wideComponent}
+                    nutrition={
+                      show.nutritionIds
+                        ? // ? allNutritions[show.nutritionIds[nutrition.id]] //TODO: optimize
+                          allNutritions.find(n => n.id === nutrition.id)
+                        : allNutritions.find(n => n.id === nutrition.id)
+                    } //TODO: optimize
+                  />
+                  <EditableValue
+                    // className="nutritionValue"
+                    initialValue={nutrition.amount}
+                    name={nutrition.id}
+                    updateValue={updateNutritionAmountValue}
+                    width="3rem"
+                    type="number"
+                    decimals={0}
+                  />
+                  <div className="icons">
+                    <IconWithTooltip
+                      className="IconWithTooltip"
+                      tooltipText="Remove nutrition"
+                      position="right center"
+                    >
+                      <MdDelete
+                        className="icon"
+                        style={{ color: 'red' }}
+                        onClick={() => removeNutrition(nutrition.id)}
+                      />
+                    </IconWithTooltip>
                   </div>
                 </li>
               ))}
-              <li>
-                <div
-                  className="nutritionRow summaryBorder"
-                  style={{ marginRight: '4.6rem' }}
-                >
-                  <MealSummary meal={meal} showBorderTop={true} />
+              <li
+                className={`mealGrid ${!wideComponent ? 'narrowMealGrid' : ''}`}
+              >
+                {wideComponent ? (
+                  <MealSummary
+                    wideComponent={wideComponent}
+                    meal={meal}
+                    showBorderTop={true}
+                  />
+                ) : (
+                  <div className="gridName borderTop" />
+                )}
+                <div className="gridNumber borderTop boldText">
+                  {mealAmount}
                 </div>
                 {showContent.detailedSummary && (
                   <NutritionSummary meal={meal} showBorderTop={true} />

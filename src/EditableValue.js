@@ -7,13 +7,15 @@ export default function EditableValue({
   width,
   type,
   tooltip,
-  className
+  className,
+  decimals
 }) {
   const [value, setValue] = useState(initialValue);
   const [editMode, setEditMode] = useState(false);
   width = width === undefined ? '5rem' : width;
+  decimals = decimals === undefined ? 1 : +decimals;
   type = type === undefined ? 'text' : type;
-  className = className === undefined ? 'nutritionValue' : className;
+  className = className === undefined ? 'gridNumber' : className;
 
   const keyPress = e => {
     console.log(e.keyCode);
@@ -45,18 +47,19 @@ export default function EditableValue({
       className={className}
       tabIndex="0"
       style={{
-        // display: 'block',
         fontFamily: 'inherit',
         fontSize: 'inherit',
-        // display: 'inline-block',
         textAlign: type === 'number' ? 'right' : 'left',
-        // width,
         overflow: 'hidden',
         whiteSpace: 'nowrap'
       }}
       onClick={() => setEditMode(true)}
     >
-      {type === 'number' ? (+value).toFixed(1) : value}
+      {type === 'number' ? (
+        (+value).toFixed(decimals)
+      ) : (
+        <div className="gridNameOverflow">{value}</div>
+      )}
     </div>
   );
 

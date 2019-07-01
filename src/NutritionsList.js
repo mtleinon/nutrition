@@ -26,9 +26,8 @@ export default function NutritionsList() {
   });
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  // const [count, setCount] = useState(10);
 
-  const meals = useContext(MealContext);
+  // const meals = useContext(MealContext);
 
   const changeSearchString = e => {
     const newSearchString = e.target.value.toLowerCase();
@@ -48,27 +47,8 @@ export default function NutritionsList() {
     setPage(1);
   };
 
-  const mealInEditMode =
-    meals.length === 1 ? meals[0] : meals.find(meal => meal.editMode);
-
-  const canNutritionBeAddedToMeal = nutritionId => {
-    if (mealInEditMode) {
-      if (
-        !mealInEditMode.nutritions.find(
-          nutritionInMeal => nutritionInMeal.id === nutritionId
-        )
-      ) {
-        return true;
-      }
-    }
-    return false;
-  };
-  const nutritionInMeal = nutritionId => {
-    const meal = meals.find(meal =>
-      meal.nutritions.find(nutr => nutr.id === nutritionId)
-    );
-    return meal ? meal.name : '';
-  };
+  // const mealInEditMode =
+  //   meals.length === 1 ? meals[0] : meals.find(meal => meal.editMode);
 
   const toggleShowNutritions = () => {
     showDispatch({
@@ -166,33 +146,11 @@ export default function NutritionsList() {
       </div>
       {show.showNutritions && (
         <div className="nutritionListContainerColor listContainer">
-          <div className="card">
-            <div className="cardContent">
-              <ul>
-                <li>
-                  <div style={{ marginRight: '3.2rem' }}>
-                    <NutritionHeading />
-                  </div>
-                </li>
-
-                {filterState.filteredNutritions
-                  .filter((_, i, array) => {
-                    return i >= (page - 1) * pageSize && i < page * pageSize;
-                  })
-                  .map(nutrition => (
-                    <Nutrition
-                      key={nutrition.id}
-                      nutrition={nutrition}
-                      mealInEditMode={mealInEditMode !== undefined}
-                      canNutritionBeAddedToMeal={canNutritionBeAddedToMeal(
-                        nutrition.id
-                      )}
-                      nutritionInMeal={nutritionInMeal(nutrition.id)}
-                    />
-                  ))}
-              </ul>
-            </div>
-          </div>
+          <Nutrition
+            filteredNutritions={filterState.filteredNutritions}
+            page={page}
+            pageSize={pageSize}
+          />
         </div>
       )}
     </div>

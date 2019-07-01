@@ -125,7 +125,7 @@ export default function MealMicronutrientSummary({
 
   const onResize = width => {
     console.log(width);
-    if (width < 300) {
+    if (width < 500) {
       setWideComponent(false);
     } else {
       setWideComponent(true);

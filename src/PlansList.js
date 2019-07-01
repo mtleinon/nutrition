@@ -43,7 +43,7 @@ export default function PlansList() {
               <MdExpandMore className="icon" onClick={toggleShowPlans} />
             </IconWithTooltip>
           )}
-          <IconWithTooltip tooltipText="ShAdd new plan">
+          <IconWithTooltip tooltipText="Add new plan">
             <MdAddCircle
               className="icon"
               style={{ color: 'green' }}

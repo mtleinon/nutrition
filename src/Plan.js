@@ -44,6 +44,7 @@ export default function Plan({ plan }) {
         <div className="cardTitleRow">
           <div className="cardTitle">
             <EditableValue
+              className="gridName"
               initialValue={plan.name}
               name="name"
               updateValue={updateValue}
@@ -89,43 +90,37 @@ export default function Plan({ plan }) {
         {plan.meals.length > 0 && (
           <div className="cardContent">
             <ul>
-              <li>
-                <div style={{ marginRight: '1.6rem' }}>
-                  <NutritionHeading />
-                </div>
+              <li className="planGrid">
+                <NutritionHeading wideComponent={true} />
               </li>
               {plan.meals.map(meal => (
-                <li key={meal.id}>
-                  <div className="nutritionRow">
-                    <MealSummary
-                      name={allMeals.find(m => m.id === meal.id).name}
-                      meal={allMeals.find(m => m.id === meal.id)}
-                    />
-                    <div className="icons">
-                      <IconWithTooltip
-                        tooltipText="Remove meal"
-                        position="right center"
-                      >
-                        <MdDelete
-                          className="icon"
-                          style={{ color: 'red' }}
-                          onClick={() =>
-                            planDispatch({
-                              type: 'REMOVE_MEAL',
-                              planId: plan.id,
-                              mealId: meal.id
-                            })
-                          }
-                        />
-                      </IconWithTooltip>
-                    </div>
+                <li key={meal.id} className="planGrid">
+                  <MealSummary
+                    name={allMeals.find(m => m.id === meal.id).name}
+                    meal={allMeals.find(m => m.id === meal.id)}
+                  />
+                  <div className="icons">
+                    <IconWithTooltip
+                      tooltipText="Remove meal"
+                      position="right center"
+                    >
+                      <MdDelete
+                        className="icon"
+                        style={{ color: 'red' }}
+                        onClick={() =>
+                          planDispatch({
+                            type: 'REMOVE_MEAL',
+                            planId: plan.id,
+                            mealId: meal.id
+                          })
+                        }
+                      />
+                    </IconWithTooltip>
                   </div>
                 </li>
               ))}
-              <li>
-                <div style={{ marginRight: '1.6rem' }}>
-                  <PlanSummary plan={plan} showBorderTop={true} />
-                </div>
+              <li className="planGrid">
+                <PlanSummary plan={plan} showBorderTop={true} />
               </li>
             </ul>
           </div>

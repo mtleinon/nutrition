@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function NutritionHeading({ wideComponent }) {
+export default function MealHeading({ wideComponent }) {
   return (
     <>
       <div className="gridName borderBottom boldText">Name</div>
@@ -12,6 +12,7 @@ export default function NutritionHeading({ wideComponent }) {
           <div className="gridNumber borderBottom boldText">Carb</div>
         </>
       )}
+      <div className="gridNumber borderBottom boldText">Amo</div>
     </>
   );
 }

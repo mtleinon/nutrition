@@ -1,5 +1,6 @@
 body, html {
   overflow-x: hidden;
+  font-family: roboto, sans-serif;
 }
 * {
   box-sizing: border-box;
@@ -81,7 +82,8 @@ body, html {
 }
 .listTitle {
   font-size: 1.1rem;
-  font-weight: bold;
+  font-weight: bolder;
+  letter-spacing: .5px;
 }
 .listTitleRow input {
   font-family: inherit;
@@ -141,7 +143,9 @@ ul {
   border-bottom: 1px solid black;
   margin-bottom: .2rem;
 }
-
+.boldText {
+  font-weight: 500;
+}
 .nutritionSummary {
   display: flex;
   min-width: 0;
@@ -162,7 +166,7 @@ ul {
 .cardTitleRow {
   display:flex;
   font-size: 1.1rem;
-  font-weight: bold;
+  font-weight: 500;
   align-content: center;
   justify-content: space-between;
   height: 1.5rem;
@@ -202,6 +206,8 @@ ul {
   scrollbar-width: thin;
 }
 
+
+
 .nutritionListColor {
   background-color: rgb(117, 211, 255);
 }
@@ -223,6 +229,50 @@ ul {
   scrollbar-width: thin;
 }
 
+.mealGrid {
+  display: grid;
+  grid-template-columns: minmax(6rem, 1fr) repeat(5, 3rem) 2rem;
+  grid-auto-rows: 2rem;
+}
+.narrowMealGrid {
+  grid-template-columns: minmax(6rem, 1fr) 3rem 2rem;
+}
+.planGrid {
+  display: grid;
+  grid-template-columns: minmax(6rem, 1fr) repeat(4, 3rem) 2rem;
+  grid-auto-rows: 2rem;
+}
+
+.nutritionGrid {
+  display: grid;
+  grid-template-columns: minmax(6rem, 1fr) repeat(4, 3rem) 5rem;
+  grid-auto-rows: 2rem;
+}
+.narrowNutritionGrid {
+  grid-template-columns: minmax(6rem, 1fr) 5rem;
+}
+
+.gridNumber {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.gridName {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.gridNameOverflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.borderBottom {
+  border-bottom: 1px solid black;
+}
+.borderTop {
+  border-top: 1px solid black;
+}
 /* Scroll bar styling for Chrome */
 /* width */
 ::-webkit-scrollbar {
