@@ -319,11 +319,12 @@ ul {
 }
 .reportGrid {
   display: grid;
-  grid-template-columns: 2rem minmax(6rem, 1fr) 4rem 4rem 6rem 4rem;
+  grid-template-columns: 3rem minmax(6rem, 1fr) 4rem 4rem 6rem 4rem;
+  grid-column-gap: .3rem;
   grid-auto-rows: 3rem;
 }
 .narrowReportGrid {
-  grid-template-columns: 2rem minmax(6rem, 1fr) 4rem 6rem;
+  grid-template-columns: 3rem minmax(6rem, 1fr) 4rem 6rem;
 }
 .reportNumber {
   justify-content: flex-end;
@@ -364,4 +365,12 @@ ul {
 .reportTableHeading {
   border: 1px solid #aaa;
   border-bottom: none;
+}
+
+.clickable {
+  cursor: pointer;
+}
+.sortIcon {
+  margin-left: .3rem;
+  color: green;
 }
